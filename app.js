@@ -1,0 +1,2 @@
+'use strict';
+(async()=>{for(const src of ["core-domain.js", "core-questions.js", "core-ui.js", "app-duel.js", "war-context.js", "war-scene-core.js", "war-scene-render.js", "war-scene-turn.js", "war-scene-effects.js", "app-ui.js", "pwa.js"] ){await new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='./'+src;s.onload=resolve;s.onerror=reject;document.head.appendChild(s)})}})().catch(console.error);

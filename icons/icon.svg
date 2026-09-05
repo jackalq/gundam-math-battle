@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="鋼彈九九大作戰">
+  <rect width="512" height="512" rx="96" fill="#081321"/>
+  <circle cx="256" cy="256" r="205" fill="#10263e" stroke="#ffe263" stroke-width="12"/>
+  <path d="M164 158l58 45h68l58-45 26 38-42 61v106l-76 48-76-48V257l-42-61z" fill="#eef4f8" stroke="#132033" stroke-width="12" stroke-linejoin="round"/>
+  <path d="M222 203l-63-77 28-22 69 73 69-73 28 22-63 77" fill="#f5d93d" stroke="#132033" stroke-width="10" stroke-linejoin="round"/>
+  <path d="M185 250h142l-18 58H203z" fill="#1f67b8" stroke="#132033" stroke-width="10"/>
+  <rect x="210" y="264" width="92" height="18" rx="9" fill="#ffe263"/>
+  <path d="M214 319h84l-13 54h-58z" fill="#d94350" stroke="#132033" stroke-width="10"/>
+  <text x="256" y="470" text-anchor="middle" font-family="system-ui,sans-serif" font-size="58" font-weight="900" fill="#ffffff">九九</text>
+</svg>
