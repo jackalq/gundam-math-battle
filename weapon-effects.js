@@ -1,27 +1,27 @@
 'use strict';
 const WeaponFX=(()=>{
   const wait=ms=>new Promise(r=>setTimeout(r,ms));
-  function point(root,node,enemy=false,target=false){
+  function point(root,node,nodeIsEnemy=false){
     const rr=root.getBoundingClientRect(),r=node.getBoundingClientRect();
     return {
-      x:(enemy?(target?r.left+r.width*.68:r.left+r.width*.28):(target?r.left+r.width*.32:r.left+r.width*.72))-rr.left,
-      y:(r.top+r.height*(target?.53:.54))-rr.top
+      x:(r.left+r.width*(nodeIsEnemy?.28:.72))-rr.left,
+      y:(r.top+r.height*.54)-rr.top
     };
   }
   function el(root,cls,x,y){
     const n=document.createElement('i');n.className=cls;n.style.left=x+'px';n.style.top=y+'px';root.appendChild(n);return n;
   }
   function muzzle(root,node,enemy=false){
-    const p=point(root,node,enemy,false),m=el(root,'weapon-muzzle'+(enemy?' enemy':''),p.x,p.y);
+    const p=point(root,node,enemy),m=el(root,'weapon-muzzle'+(enemy?' enemy':''),p.x,p.y);
     m.animate([{transform:'translate(-50%,-50%) scale(.25)',opacity:0},{transform:'translate(-50%,-50%) scale(1.4)',opacity:1},{transform:'translate(-50%,-50%) scale(.4)',opacity:0}],{duration:150,easing:'ease-out'}).onfinish=()=>m.remove();
   }
   function impact(root,node,enemy=false){
-    const p=point(root,node,!enemy,true),m=el(root,'weapon-impact'+(enemy?' enemy':''),p.x,p.y);
+    const p=point(root,node,!enemy),m=el(root,'weapon-impact'+(enemy?' enemy':''),p.x,p.y);
     m.animate([{transform:'translate(-50%,-50%) scale(.2) rotate(0deg)',opacity:0},{transform:'translate(-50%,-50%) scale(1.25) rotate(65deg)',opacity:1},{transform:'translate(-50%,-50%) scale(1.8) rotate(115deg)',opacity:0}],{duration:230,easing:'ease-out'}).onfinish=()=>m.remove();
   }
   function shot(root,from,to,enemy=false,bullet=false){
     return new Promise(resolve=>{
-      const a=point(root,from,enemy,false),b=point(root,to,!enemy,true),dx=b.x-a.x,dy=b.y-a.y;
+      const a=point(root,from,enemy),b=point(root,to,!enemy),dx=b.x-a.x,dy=b.y-a.y;
       const ang=Math.atan2(dy,dx)*180/Math.PI;
       const p=el(root,(bullet?'weapon-bullet':'weapon-beam')+(enemy?' enemy':''),a.x,a.y);
       p.style.transform=`translate(-50%,-50%) rotate(${ang}deg)`;
@@ -61,7 +61,7 @@ const WeaponFX=(()=>{
       {translate:`${dx}px ${dy}px`,offset:.66},
       {translate:'0 0'}
     ],{duration:620,easing:'cubic-bezier(.2,.85,.25,1)'});
-    const slashAt=point(root,to,!enemy,true);
+    const slashAt=point(root,to,!enemy);
     await wait(245);
     const slash=el(root,'weapon-slash'+(enemy?' enemy':''),slashAt.x,slashAt.y);
     slash.animate([
