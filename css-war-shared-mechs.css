@@ -1,21 +1,33 @@
-/* Reuse the exact duel/campaign Gundam and Zaku part structure in WarScene. */
-.war-mech-shell{position:relative;width:94px;height:116px;margin:0 auto 1px;overflow:visible;z-index:2}
-.war-mech-shell .robot{position:absolute;left:50%;bottom:0;margin:0;width:180px;height:245px;transform-origin:50% 100%;filter:drop-shadow(0 10px 8px #000b)}
-.war-mech-shell.hero .robot{transform:translateX(-50%) scale(.45)}
-.war-mech-shell.enemy .robot{transform:translateX(-50%) scaleX(-1) scale(.45)}
-.war-unit.veteran .war-mech-shell.enemy .robot{filter:drop-shadow(0 10px 8px #000b) drop-shadow(0 0 8px #9bcf8066)}
-.war-unit.elite .war-mech-shell.enemy .robot{filter:drop-shadow(0 10px 8px #000b) drop-shadow(0 0 10px #ff607866)}
+/* WarScene renders the exact campaign robot DOM. Only the outer shell scales it. */
+.war-mech-shell{
+  position:relative;width:min(72px,100%);height:84px;margin:0 auto;
+  overflow:hidden;z-index:2;flex:0 0 auto
+}
+.war-mech-shell .robot{
+  position:absolute;left:50%;bottom:0;margin:0;width:180px;height:245px;
+  transform-origin:50% 100%;filter:drop-shadow(0 8px 6px #000b)
+}
+.war-mech-shell.hero .robot{transform:translateX(-50%) scale(.34)}
+.war-mech-shell.enemy .robot{transform:translateX(-50%) scaleX(-1) scale(.34)}
+.war-unit.veteran .war-mech-shell.enemy .robot{filter:drop-shadow(0 8px 6px #000b) drop-shadow(0 0 6px #9bcf8055)}
+.war-unit.elite .war-mech-shell.enemy .robot{filter:drop-shadow(0 8px 6px #000b) drop-shadow(0 0 7px #ff607855)}
 
-/* Keep the shared model unchanged at rest; only emphasize its weapon during the attack animation. */
+/* Weapon emphasis only; the mech artwork itself remains shared with CampaignScene. */
 .war-unit.using-melee .war-mech-shell.hero .beam{animation:sharedSaberPulse .28s ease-in-out infinite alternate;opacity:1}
 .war-unit.using-melee .war-mech-shell.enemy .axe{animation:sharedAxePulse .28s ease-in-out infinite alternate}
-.war-unit.using-ranged .war-mech-shell{filter:drop-shadow(0 0 8px #79eaff66)}
-.enemy-formation .war-unit.using-ranged .war-mech-shell{filter:drop-shadow(0 0 8px #ff9b5e66)}
+.war-unit.using-ranged .war-mech-shell{filter:drop-shadow(0 0 6px #79eaff55)}
+.enemy-formation .war-unit.using-ranged .war-mech-shell{filter:drop-shadow(0 0 6px #ff9b5e55)}
 @keyframes sharedSaberPulse{from{filter:brightness(1)}to{filter:brightness(1.8) drop-shadow(0 0 8px #8fffff)}}
 @keyframes sharedAxePulse{from{filter:brightness(1)}to{filter:brightness(1.5) drop-shadow(0 0 6px #ffae62)}}
 
 @media(max-width:680px){
-  .war-mech-shell{width:78px;height:98px}
-  .war-mech-shell.hero .robot{transform:translateX(-50%) scale(.38)}
-  .war-mech-shell.enemy .robot{transform:translateX(-50%) scaleX(-1) scale(.38)}
+  .war-mech-shell{width:min(58px,100%);height:68px}
+  .war-mech-shell.hero .robot{transform:translateX(-50%) scale(.275)}
+  .war-mech-shell.enemy .robot{transform:translateX(-50%) scaleX(-1) scale(.275)}
+}
+
+@media(max-width:390px){
+  .war-mech-shell{width:min(50px,100%);height:60px}
+  .war-mech-shell.hero .robot{transform:translateX(-50%) scale(.24)}
+  .war-mech-shell.enemy .robot{transform:translateX(-50%) scaleX(-1) scale(.24)}
 }
