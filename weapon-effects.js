@@ -4,7 +4,7 @@ const WeaponFX=(()=>{
   function point(root,node,nodeIsEnemy=false){
     const rr=root.getBoundingClientRect(),r=node.getBoundingClientRect();
     return {
-      x:(r.left+r.width*(nodeIsEnemy?.28:.72))-rr.left,
+      x:(r.left+r.width*(nodeIsEnemy ? .28 : .72))-rr.left,
       y:(r.top+r.height*.54)-rr.top
     };
   }
