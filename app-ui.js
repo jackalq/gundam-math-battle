@@ -1,7 +1,7 @@
 const scenes={duel:new DuelScene(),campaign:new CampaignScene(),war:new WarScene()};
 function currentScene(){return game.level==='war'?scenes.war:game.level==='battle'?scenes.campaign:scenes.duel}
 
-function resetSession(){AnswerReview.cancel();game.running=true;game.paused=false;game.score=0;game.combo=0;game.correctCount=0;game.round=0;game.question=null;game.phase='idle';CommonUI.update();$('#pauseBtn').textContent='暫停';$('#startOverlay').classList.add('hidden');$('#endOverlay').classList.add('hidden');currentScene().start()}
+function resetSession(){AnswerReview.cancel();game.running=true;game.paused=false;game.score=0;game.combo=0;game.correctCount=0;game.round=0;game.question=null;game.phase='idle';CommonUI.update();$('#startOverlay').classList.add('hidden');$('#endOverlay').classList.add('hidden');currentScene().start()}
 function finish(victory,data={}){
   AnswerReview.cancel();game.running=false;game.phase='ended';game.question=null;
   const title=$('#endTitle'),text=$('#endText'),next=$('#nextBtn');
@@ -34,8 +34,7 @@ function renderTable(){const grid=$('#tableGrid');grid.innerHTML='';for(let a=1;
 $$('[data-level]').forEach(btn=>btn.onclick=()=>{$$('[data-level]').forEach(b=>b.classList.remove('on'));btn.classList.add('on');game.level=btn.dataset.level;game.stage=1});
 $('#startBtn').onclick=resetSession;$('#nextBtn').onclick=nextLevel;$('#backSelectBtn').onclick=goSelection;$('#selectBtn').onclick=goSelection;
 $('#tableBtn').onclick=()=>{renderTable();$('#tableOverlay').classList.remove('hidden')};$('#closeTable').onclick=()=>$('#tableOverlay').classList.add('hidden');
-$('#pauseBtn').onclick=()=>{if(!game.running)return;game.paused=!game.paused;$('#pauseBtn').textContent=game.paused?'繼續':'暫停';currentScene().pauseChanged?.()};
 $('#soundBtn').onclick=()=>{game.sound=!game.sound;$('#soundBtn').textContent='音效：'+(game.sound?'開':'關');if(game.sound)Sound.tap()};
 $('#resetBtn').onclick=()=>{if(confirm('要重新開始這一場嗎？九九熟練度會保留。'))resetSession()};
-window.addEventListener('keydown',e=>{if(['1','2','3','4'].includes(e.key)&&game.running&&!game.paused&&game.phase==='question'){const root=game.level==='war'?$('#warQuestionPanel'):game.level==='battle'?$('#campaignQuestionPanel'):$('#duelQuestionPanel');const b=root.querySelectorAll('.answer')[Number(e.key)-1];if(b&&!b.disabled)b.click()}if(e.key===' '&&game.running){e.preventDefault();$('#pauseBtn').click()}});
+window.addEventListener('keydown',e=>{if(['1','2','3','4'].includes(e.key)&&game.running&&!game.paused&&game.phase==='question'){const root=game.level==='war'?$('#warQuestionPanel'):game.level==='battle'?$('#campaignQuestionPanel'):$('#duelQuestionPanel');const b=root.querySelectorAll('.answer')[Number(e.key)-1];if(b&&!b.disabled)b.click()}});
 CommonUI.update();CommonUI.setMode('選關');renderTable();activateScene('duelScene');
