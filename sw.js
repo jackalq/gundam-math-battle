@@ -1,5 +1,5 @@
 'use strict';
-const CACHE_NAME='gundam-math-v6-shared-mechs';
+const CACHE_NAME='gundam-math-v7-no-pause';
 const APP_SHELL=[
   './','./index.html','./styles.css',
   './css-base-layout.css','./css-duel-hero.css','./css-duel-enemy.css','./css-question-review.css','./css-war-layout.css','./css-war-units.css','./css-war-shared-mechs.css','./css-ui.css',
