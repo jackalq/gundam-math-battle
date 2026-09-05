@@ -1,8 +1,8 @@
 'use strict';
-const CACHE_NAME='gundam-math-v5-war-weapons';
+const CACHE_NAME='gundam-math-v6-shared-mechs';
 const APP_SHELL=[
   './','./index.html','./styles.css',
-  './css-base-layout.css','./css-duel-hero.css','./css-duel-enemy.css','./css-question-review.css','./css-war-layout.css','./css-war-units.css','./css-ui.css',
+  './css-base-layout.css','./css-duel-hero.css','./css-duel-enemy.css','./css-question-review.css','./css-war-layout.css','./css-war-units.css','./css-war-shared-mechs.css','./css-ui.css',
   './app.js','./core-domain.js','./core-questions.js','./core-ui.js','./app-duel.js','./war-context.js','./war-scene-core.js','./war-scene-render.js','./war-scene-turn.js','./war-scene-effects.js','./app-ui.js','./pwa.js',
   './manifest.webmanifest','./icons/icon-192.png','./icons/icon.svg'
 ];

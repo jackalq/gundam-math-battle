@@ -40,18 +40,13 @@ Object.assign(WarScene.prototype,{
   unitMarkup(u){
     const z=u.side==='enemy';
     const role=this.isFrontline(u)?'前排':'後排';
+    const mech=z
+      ? `<div class="war-mech-shell enemy"><div class="robot war-shared-robot"><i class="part spike"></i><i class="part head"></i><i class="part visor"></i><i class="part eye"></i><i class="part chest"></i><i class="part waist"></i><i class="part skirt1"></i><i class="part skirt2"></i><i class="part shoulder"></i><i class="part armL"></i><i class="part armR"></i><i class="part legL"></i><i class="part legR"></i><i class="part footL"></i><i class="part footR"></i><i class="part axe"></i></div></div>`
+      : `<div class="war-mech-shell hero"><div class="robot war-shared-robot"><i class="part v1"></i><i class="part v2"></i><i class="part head"></i><i class="part face"></i><i class="part visor"></i><i class="part chest"></i><i class="part chest2"></i><i class="part waist"></i><i class="part skirt1"></i><i class="part skirt2"></i><i class="part armL"></i><i class="part armR"></i><i class="part legL"></i><i class="part legR"></i><i class="part footL"></i><i class="part footR"></i><i class="part beam"></i></div></div>`;
     return `<div class="unit-name"><span class="${u.player?'you':''}">${u.player?'YOU｜':''}${u.name}${z?` <em>Lv.${u.rank}</em>`:''}</span><span>${Math.ceil(u.hp)}/${u.maxHp}</span></div>
       <div class="unit-hp"><i style="width:${(u.hp/u.maxHp)*100}%"></i></div>
       <div class="formation-role">${role}</div>
-      <div class="mini-mech ${z?'zaku':'gundam'}">
-        <i class="m-backpack"></i><i class="m-antenna"></i><i class="m-head"></i><i class="m-eye"></i>
-        <i class="m-neck"></i><i class="m-body"></i><i class="m-core"></i>
-        <i class="m-shoulder1"></i><i class="m-shoulder2"></i><i class="m-arm1"></i><i class="m-arm2"></i>
-        <i class="m-shield"></i><i class="m-gun"></i><i class="m-blade"></i>
-        <i class="m-skirt"></i><i class="m-leg1"></i><i class="m-leg2"></i>
-        <i class="m-knee1"></i><i class="m-knee2"></i><i class="m-foot1"></i><i class="m-foot2"></i>
-        <i class="m-thruster1"></i><i class="m-thruster2"></i>
-      </div>`;
+      ${mech}`;
   },
   statusText(side){
     const list=side==='ally'?this.allies:this.enemies;
