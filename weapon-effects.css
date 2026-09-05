@@ -1,5 +1,5 @@
 /* Sprite-driven weapon FX shared by duel, campaign and war scenes. */
-.weapon-muzzle,.weapon-impact,.weapon-beam,.weapon-bullet,.weapon-saber,.weapon-axe,.weapon-slash{position:absolute;z-index:30;pointer-events:none}
+.weapon-muzzle,.weapon-impact,.weapon-beam,.weapon-bullet,.weapon-saber,.weapon-axe,.weapon-slash,.weapon-dash-smoke,.weapon-contact-flash{position:absolute;z-index:30;pointer-events:none}
 .weapon-muzzle,.weapon-impact,.weapon-beam,.weapon-bullet,.weapon-slash{
   width:42px;height:42px;margin:-21px 0 0 -21px;
   background-image:url('./weapon-sprites.svg');background-repeat:no-repeat;background-size:400% 500%;
@@ -11,32 +11,51 @@
 .weapon-impact.enemy{filter:hue-rotate(-22deg) saturate(1.3) drop-shadow(0 0 8px #ff6338)}
 .weapon-slash{width:64px;height:64px;margin:-32px 0 0 -32px;color:#e43cff;background-position-y:50%;animation:fxSprite .29s steps(3) forwards;transform-origin:center}
 .weapon-slash.enemy{filter:hue-rotate(-62deg) saturate(1.7) drop-shadow(0 0 8px #ff8a30)}
+.weapon-slash.close{width:92px;height:92px;margin:-46px 0 0 -46px;z-index:42;filter:drop-shadow(0 0 10px #fff) drop-shadow(0 0 20px #dd38ff)}
+.weapon-slash.close.enemy{filter:hue-rotate(-62deg) saturate(1.7) drop-shadow(0 0 10px #fff1c5) drop-shadow(0 0 22px #ff742d)}
+.weapon-slash.secondary{width:68px;height:68px;margin:-34px 0 0 -34px;opacity:.72;z-index:41;animation-duration:.24s}
 .weapon-beam,.weapon-bullet{width:38px;height:28px;margin:-14px 0 0 -19px;background-position-y:100%;animation:fxProjectile .22s steps(3) infinite;color:#ff57dc;transform-origin:center}
 .weapon-bullet{width:28px;height:22px;margin:-11px 0 0 -14px;filter:hue-rotate(-70deg) saturate(1.5) drop-shadow(0 0 5px #ff9a32)}
 @keyframes fxSprite{from{background-position-x:0}to{background-position-x:100%}}
 @keyframes fxProjectile{from{background-position-x:0}to{background-position-x:100%}}
 
-/* The blade body stays attached to the moving mech; its energy pulse is sprite-driven. */
-.weapon-saber,.weapon-axe{width:18px;height:82px;margin:-66px 0 0 -9px;transform-origin:50% 88%;background:#171d27;border-radius:5px}
+/* Close-range weapons are attached to the moving mech so the blade travels with the body. */
+.weapon-saber,.weapon-axe{width:18px;height:82px;margin:-66px 0 0 -9px;transform-origin:50% 88%;background:#171d27;border-radius:5px;z-index:44}
+.weapon-saber.attached,.weapon-axe.attached{position:absolute;will-change:transform,opacity}
 .weapon-saber:before,.weapon-axe:before{
   content:"";position:absolute;inset:-6px -22px -4px -22px;background-image:url('./weapon-sprites.svg');
-  background-repeat:no-repeat;background-size:400% 500%;background-position-y:75%;animation:fxSprite .32s steps(3) infinite;filter:drop-shadow(0 0 9px #e63cff)
+  background-repeat:no-repeat;background-size:400% 500%;background-position-y:75%;animation:fxSprite .2s steps(3) infinite;filter:drop-shadow(0 0 9px #e63cff)
 }
 .weapon-saber:after{content:"";position:absolute;left:2px;right:2px;bottom:-7px;height:18px;border-radius:4px;background:#cdd6df;box-shadow:inset 0 0 0 2px #536070}
-.weapon-axe{height:56px;background:#555e68}
+.weapon-axe{height:60px;background:#555e68}
 .weapon-axe:before{filter:hue-rotate(-65deg) saturate(1.7) drop-shadow(0 0 9px #ff7b2e)}
-.weapon-axe:after{content:"";position:absolute;left:-18px;top:-7px;width:44px;height:25px;background:linear-gradient(135deg,#fff7a8,#ffb139 45%,#ff5a28);clip-path:polygon(0 18%,100% 0,72% 100%,13% 72%);filter:drop-shadow(0 0 7px #ff7c2d)}
+.weapon-axe:after{content:"";position:absolute;left:-21px;top:-9px;width:49px;height:29px;background:linear-gradient(135deg,#fff7a8,#ffb139 42%,#ff5a28);clip-path:polygon(0 18%,100% 0,74% 100%,12% 72%);filter:drop-shadow(0 0 8px #ff7c2d)}
 
-/* Sprite pose states for the current SD character sprite. */
+.weapon-dash-smoke{width:54px;height:26px;margin:-13px 0 0 -27px;border-radius:50%;background:radial-gradient(ellipse at center,#d9efff99 0 16%,#7ca8c477 17% 34%,transparent 68%);filter:blur(.3px);animation:dashSmoke .35s ease-out forwards;z-index:25}
+.weapon-dash-smoke.enemy{filter:hue-rotate(-25deg) blur(.3px)}
+@keyframes dashSmoke{0%{scale:.3;opacity:0}35%{scale:1.15 .8;opacity:.9}100%{scale:1.9 .55;opacity:0;translate:-12px 4px}}
+.weapon-contact-flash{width:74px;height:74px;margin:-37px 0 0 -37px;border-radius:50%;background:conic-gradient(from 0deg,transparent 0 8%,#fff 9% 12%,transparent 13% 22%,#ffed75 23% 27%,transparent 28% 40%,#fff 41% 44%,transparent 45% 100%);filter:drop-shadow(0 0 10px #fff) drop-shadow(0 0 20px #ffca55);animation:contactFlash .24s ease-out forwards;z-index:46}
+.weapon-contact-flash.enemy{filter:hue-rotate(-32deg) drop-shadow(0 0 10px #fff) drop-shadow(0 0 20px #ff733a)}
+@keyframes contactFlash{0%{scale:.15;rotate:0deg;opacity:0}40%{scale:1.2;opacity:1}100%{scale:1.65;rotate:70deg;opacity:0}}
+
+/* Pose states for the current SD character sprite. */
 .robot.sprite-aim{animation:spriteAim .16s steps(2) both}
 .robot.sprite-fire{animation:spriteFire .18s steps(2) both}
-.robot.sprite-melee{animation:spriteMelee .3s steps(3) both}
+.robot.sprite-melee-ready{animation:spriteMeleeReady .16s ease-out both}
+.robot.sprite-melee-strike{animation:spriteMeleeStrike .26s cubic-bezier(.12,.9,.2,1) both}
+.robot.sprite-melee{animation:spriteMeleeReturn .22s ease-out both}
 .robot.sprite-hit{animation:spriteHit .22s steps(2) both}
 @keyframes spriteAim{0%{rotate:0deg;translate:0 0}100%{rotate:-2deg;translate:2px -1px}}
 @keyframes spriteFire{0%,100%{translate:0 0}50%{translate:-7px 1px;rotate:-3deg}}
 .enemy .robot.sprite-fire,.enemy-formation .robot.sprite-fire{animation-name:spriteFireEnemy}
 @keyframes spriteFireEnemy{0%,100%{translate:0 0}50%{translate:7px 1px;rotate:3deg}}
-@keyframes spriteMelee{0%{rotate:0}45%{rotate:-7deg}100%{rotate:7deg}}
+@keyframes spriteMeleeReady{0%{rotate:0deg;scale:1}100%{rotate:-4deg;scale:1.04;filter:brightness(1.12)}}
+.enemy .robot.sprite-melee-ready,.enemy-formation .robot.sprite-melee-ready{animation-name:spriteMeleeReadyEnemy}
+@keyframes spriteMeleeReadyEnemy{0%{rotate:0deg;scale:1}100%{rotate:4deg;scale:1.04;filter:brightness(1.12)}}
+@keyframes spriteMeleeStrike{0%{rotate:-5deg}42%{rotate:9deg;scale:1.08}100%{rotate:3deg;scale:1.04}}
+.enemy .robot.sprite-melee-strike,.enemy-formation .robot.sprite-melee-strike{animation-name:spriteMeleeStrikeEnemy}
+@keyframes spriteMeleeStrikeEnemy{0%{rotate:5deg}42%{rotate:-9deg;scale:1.08}100%{rotate:-3deg;scale:1.04}}
+@keyframes spriteMeleeReturn{0%{filter:brightness(1.15)}100%{filter:none;rotate:0deg;scale:1}}
 @keyframes spriteHit{0%,100%{filter:drop-shadow(0 14px 12px #000a)}50%{filter:brightness(2.2) drop-shadow(0 0 15px #fff)}}
 .weapon-recoil{animation:weaponRecoil .2s ease-in-out}
 @keyframes weaponRecoil{0%,100%{translate:0 0}45%{translate:-5px 0}}
@@ -50,5 +69,7 @@
   .weapon-muzzle,.weapon-impact{width:30px;height:30px;margin:-15px 0 0 -15px}
   .weapon-beam{width:30px;height:22px;margin:-11px 0 0 -15px}.weapon-bullet{width:23px;height:18px;margin:-9px 0 0 -12px}
   .weapon-slash{width:50px;height:50px;margin:-25px 0 0 -25px}
-  .weapon-saber{height:62px;margin-top:-50px}.weapon-axe{height:46px;margin-top:-38px}
+  .weapon-slash.close{width:68px;height:68px;margin:-34px 0 0 -34px}.weapon-slash.secondary{width:50px;height:50px;margin:-25px 0 0 -25px}
+  .weapon-saber{height:62px;margin-top:-50px}.weapon-axe{height:48px;margin-top:-39px}
+  .weapon-contact-flash{width:54px;height:54px;margin:-27px 0 0 -27px}.weapon-dash-smoke{width:42px;height:21px;margin:-10px 0 0 -21px}
 }
