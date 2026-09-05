@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="320" viewBox="0 0 256 320">
+  <defs><filter id="glow"><feGaussianBlur stdDeviation="2.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+  <g filter="url(#glow)" fill="#fff8bc" stroke="#ff66d9" stroke-width="2">
+    <g transform="translate(32 32)"><circle r="6"/><path d="M-18 0H18M0-18V18M-12-12L12 12M12-12L-12 12"/></g>
+    <g transform="translate(96 32)"><circle r="9"/><path d="M-24 0H24M0-24V24M-16-16L16 16M16-16L-16 16"/></g>
+    <g transform="translate(160 32)"><circle r="12"/><path d="M-28 0H28M0-28V28M-19-19L19 19M19-19L-19 19"/></g>
+    <g transform="translate(224 32)" opacity=".45"><circle r="5"/><path d="M-16 0H16M0-16V16"/></g>
+  </g>
+  <g filter="url(#glow)">
+    <g transform="translate(32 96)"><circle r="7" fill="#fff"/><circle r="12" fill="none" stroke="#ffe76d" stroke-width="5"/></g>
+    <g transform="translate(96 96)"><path d="M0-24 6-10 20-18 13-4 28 0 13 5 20 19 6 11 0 27-6 11-20 19-13 5-28 0-13-4-20-18-6-10Z" fill="#fff3a1" stroke="#ff8438" stroke-width="3"/></g>
+    <g transform="translate(160 96)"><circle r="10" fill="#fff"/><path d="M0-30 5-13 17-25 14-8 30-13 17 0 30 13 14 8 17 25 5 13 0 30-5 13-17 25-14 8-30 13-17 0-30-13-14-8-17-25-5-13Z" fill="#ffca55" stroke="#ff5b38" stroke-width="2"/></g>
+    <g transform="translate(224 96)" fill="none" stroke="#ff9d43"><circle r="24" stroke-width="4"/><circle r="13" stroke-width="2"/></g>
+  </g>
+  <g fill="none" stroke-linecap="round" filter="url(#glow)">
+    <g transform="translate(32 160)" stroke="#fff"><path d="M-18 20Q-8-12 18-22" stroke-width="4"/></g>
+    <g transform="translate(96 160)"><path d="M-26 24Q-10-20 26-28" stroke="#fff" stroke-width="6"/><path d="M-24 28Q-8-16 30-24" stroke="#ff5edf" stroke-width="10" opacity=".7"/></g>
+    <g transform="translate(160 160)"><path d="M-30 28Q-8-27 31-30" stroke="#fff" stroke-width="7"/><path d="M-28 31Q-4-22 34-25" stroke="#d934ff" stroke-width="13" opacity=".65"/></g>
+    <g transform="translate(224 160)" opacity=".45"><path d="M-23 25Q-5-18 28-24" stroke="#ff65df" stroke-width="7"/></g>
+  </g>
+  <g filter="url(#glow)" stroke-linecap="round">
+    <g transform="translate(32 224)"><path d="M0 22V-12" stroke="#fff" stroke-width="5"/><path d="M0 22V-12" stroke="#ff55dc" stroke-width="11" opacity=".45"/></g>
+    <g transform="translate(96 224)"><path d="M0 24V-20" stroke="#fff" stroke-width="6"/><path d="M0 24V-20" stroke="#e93cff" stroke-width="14" opacity=".5"/></g>
+    <g transform="translate(160 224)"><path d="M0 26V-26" stroke="#fff" stroke-width="7"/><path d="M0 26V-26" stroke="#c82dff" stroke-width="17" opacity=".55"/></g>
+    <g transform="translate(224 224)" opacity=".55"><path d="M0 22V-16" stroke="#fff" stroke-width="5"/><path d="M0 22V-16" stroke="#ff65df" stroke-width="12" opacity=".45"/></g>
+  </g>
+  <g filter="url(#glow)">
+    <g transform="translate(32 288)"><ellipse rx="12" ry="4" fill="#fff"/><ellipse rx="20" ry="7" fill="#57ddff" opacity=".45"/></g>
+    <g transform="translate(96 288)"><ellipse rx="16" ry="5" fill="#fff"/><ellipse rx="25" ry="8" fill="#ff61d8" opacity=".5"/></g>
+    <g transform="translate(160 288)"><ellipse rx="20" ry="6" fill="#fff"/><ellipse rx="29" ry="10" fill="#55e9ff" opacity=".48"/></g>
+    <g transform="translate(224 288)"><ellipse rx="13" ry="4" fill="#fff9b1"/><ellipse rx="21" ry="7" fill="#ff9e32" opacity=".5"/></g>
+  </g>
+</svg>
