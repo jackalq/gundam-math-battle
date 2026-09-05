@@ -22,7 +22,7 @@ const WarRoles={
   Target:{alive(unit){return unit.hp>0}}
 };
 class WarTurnContext{
-  constructor(scene,correct){this.scene=scene;this.correct=correct}
+  constructor(scene,correct){this.scene=scene;this.correct=correct;this.counterScale=.25}
   allyPlans(scale=1){
     const s=this.scene;
     return s.allies.filter(x=>x.alive).map(u=>{
@@ -31,10 +31,12 @@ class WarTurnContext{
       return {attacker:u,target:t,min:Math.max(1,Math.round(base[0]*scale)),max:Math.max(1,Math.round(base[1]*scale)),enemyShot:false};
     }).filter(Boolean);
   }
-  enemyPlans(min,max,light=false){
+  enemyPlans(min,max,light=false,scale=1){
     const s=this.scene;
+    const scaledMin=Math.max(1,Math.round(min*scale));
+    const scaledMax=Math.max(scaledMin,Math.round(max*scale));
     return s.enemies.filter(x=>x.alive).map(u=>{
-      const t=s.chooseAllyTarget(light,u);return t?{attacker:u,target:t,min,max,enemyShot:true}:null;
+      const t=s.chooseAllyTarget(light,u);return t?{attacker:u,target:t,min:scaledMin,max:scaledMax,enemyShot:true}:null;
     }).filter(Boolean);
   }
   async run(){
@@ -43,15 +45,15 @@ class WarTurnContext{
       await s.banner('我方全機齊射！','var(--good)');
       await s.performVolley(this.allyPlans(1),'我方全機攻擊');
       if(s.enemies.some(x=>x.alive)&&s.allies[0].alive){
-        await s.banner('敵軍全機反擊！','var(--bad)');
-        await s.performVolley(this.enemyPlans(6,10,true),'敵軍整批反擊');
+        await s.banner('敵軍全機反擊！｜傷害 25%','var(--bad)');
+        await s.performVolley(this.enemyPlans(11,17,true,this.counterScale),'敵軍整批反擊');
       }
     }else{
       await s.banner('敵軍全機總攻擊！','var(--bad)');
-      await s.performVolley(this.enemyPlans(11,17,false),'敵軍整批攻擊');
+      await s.performVolley(this.enemyPlans(11,17,false,1),'敵軍整批攻擊');
       if(s.allies[0].alive&&s.allies.some(x=>x.alive)&&s.enemies.some(x=>x.alive)){
-        await s.banner('我方全機緊急反擊！','var(--cyan)');
-        await s.performVolley(this.allyPlans(.48),'我方整批反擊');
+        await s.banner('我方全機緊急反擊！｜傷害 25%','var(--cyan)');
+        await s.performVolley(this.allyPlans(this.counterScale),'我方整批反擊');
       }
     }
   }
