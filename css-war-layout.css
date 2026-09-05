@@ -1,5 +1,28 @@
 /* WAR SCENE - independent battlefield */
-#warScene{background:linear-gradient(180deg,#081630 0 61%,#1d2732 61% 66%,#10161e 66%)}
-.war-hud{position:absolute;z-index:6;left:12px;right:12px;top:10px;display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center}.war-side-status{background:#07111ec7;border:1px solid #355776;border-radius:12px;padding:7px 10px;font-weight:1000}.war-side-status.enemy-side{text-align:right}.war-stage-title{color:var(--gold);font-weight:1000;background:#07111edd;border:1px solid #574e27;border-radius:999px;padding:7px 12px;white-space:nowrap}
-.war-field{position:absolute;inset:0;padding:75px 30px 48px;display:grid;grid-template-columns:1fr minmax(120px,.48fr) 1fr;align-items:center;overflow:hidden}.war-field:before{content:"";position:absolute;left:50%;top:18%;bottom:11%;width:1px;background:linear-gradient(transparent,#7eb7ee44,transparent)}
-.formation{position:relative;z-index:2;display:grid;gap:18px 20px;align-items:center}.ally-formation{grid-template-columns:repeat(2,minmax(92px,150px));justify-content:start}.enemy-formation{grid-template-columns:repeat(2,minmax(92px,150px));justify-content:end}.formation-label{position:absolute;bottom:15px;font-size:12px;color:#a8bed4;font-weight:1000;letter-spacing:.12em}.formation-label.ally{left:30px}.formation-label.foe{right:30px}
+#warScene{
+  background:
+    radial-gradient(circle at 18% 18%,#1d4d7f33 0 2px,transparent 3px),
+    radial-gradient(circle at 77% 28%,#9ac9ff33 0 1px,transparent 2px),
+    linear-gradient(180deg,#061226 0 58%,#172637 58% 64%,#09121d 64%);
+}
+.war-hud{position:absolute;z-index:6;left:12px;right:12px;top:10px;display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center}
+.war-side-status{background:#07111ee8;border:1px solid #355776;border-radius:12px;padding:7px 10px;font-weight:1000;box-shadow:0 5px 18px #0007,inset 0 0 16px #3b9ef011}
+.war-side-status.enemy-side{text-align:right;border-color:#7b3f45}
+.war-stage-title{color:var(--gold);font-weight:1000;background:#07111eef;border:1px solid #75652d;border-radius:999px;padding:7px 12px;white-space:nowrap;box-shadow:0 0 18px #f2ca4530}
+.war-field{position:absolute;inset:0;padding:72px 26px 48px;display:grid;grid-template-columns:1fr minmax(105px,.42fr) 1fr;align-items:center;overflow:hidden}
+.war-field:before{content:"";position:absolute;left:50%;top:16%;bottom:10%;width:2px;background:linear-gradient(transparent,#7eb7ee55,#ff795033,transparent);box-shadow:0 0 20px #7eb7ee30}
+.formation{position:relative;z-index:2;display:grid;gap:12px 16px;align-items:center}
+.ally-formation{grid-template-columns:repeat(2,minmax(104px,154px));justify-content:start}
+.enemy-formation{grid-template-columns:repeat(2,minmax(104px,154px));justify-content:end}
+.ally-formation .war-unit.frontline{transform:translateX(18px)}
+.enemy-formation .war-unit.frontline{transform:translateX(-18px)}
+.formation-label{position:absolute;bottom:15px;font-size:12px;color:#a8bed4;font-weight:1000;letter-spacing:.12em}
+.formation-label.ally{left:30px}.formation-label.foe{right:30px}
+@media(max-width:680px){
+  .war-field{padding:76px 8px 52px;grid-template-columns:1fr 38px 1fr}
+  .formation{gap:8px 5px}
+  .ally-formation,.enemy-formation{grid-template-columns:repeat(2,minmax(76px,1fr))}
+  .ally-formation .war-unit.frontline{transform:translateX(7px)}
+  .enemy-formation .war-unit.frontline{transform:translateX(-7px)}
+  .war-hud{gap:5px}.war-side-status{font-size:10px;padding:6px}.war-stage-title{font-size:11px;padding:6px 8px}
+}

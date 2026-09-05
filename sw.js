@@ -1,5 +1,5 @@
 'use strict';
-const CACHE_NAME='gundam-math-v4';
+const CACHE_NAME='gundam-math-v5-war-weapons';
 const APP_SHELL=[
   './','./index.html','./styles.css',
   './css-base-layout.css','./css-duel-hero.css','./css-duel-enemy.css','./css-question-review.css','./css-war-layout.css','./css-war-units.css','./css-ui.css',

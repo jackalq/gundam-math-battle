@@ -1,6 +1,70 @@
 Object.assign(WarScene.prototype,{
-  async answer(value,btn){if(game.phase!=='question'||game.paused)return;game.phase='acting';this.panel.disable();const ok=value===game.question.answer;this.panel.mark(value,game.question.answer,btn);applyAnswerScore(ok);await delay(330);this.overlay.classList.remove('show');await delay(180);if(!ok){this.log.textContent='答案錯誤，先確認正確算式';await AnswerReview.show(game.question,value);if(!game.running)return;this.log.textContent='敵軍開始反擊！'}const ctx=new WarTurnContext(this,ok);await ctx.run();this.render();if(!this.allies[0].alive){finish(false,{enemyDown:this.enemies.filter(x=>!x.alive).length,alliesLeft:this.allies.filter(x=>x.alive).length});return}await this.checkReinforcements();if(this.enemies.length>=this.maxUnits&&!this.enemies.some(x=>x.alive)){finish(true,{enemyDown:this.maxUnits,alliesLeft:this.allies.filter(x=>x.alive).length});return}await delay(420);this.ask()},
-  desiredDeployment(){let target=4;if(game.round>=2)target=5;if(game.round>=4)target=6;if(!this.enemies.some(x=>x.alive)&&this.enemies.length<this.maxUnits)target=Math.max(target,this.enemies.length+1);return Math.min(this.maxUnits,target)},
-  async checkReinforcements(){const target=this.desiredDeployment();if(this.allies.length>=target&&this.enemies.length>=target)return;const wave=target===5?'第一波援軍抵達！':'第二波援軍抵達！';await this.banner(wave,'var(--gold)');while(this.allies.length<target||this.enemies.length<target){if(this.allies.length<target)await this.addReinforcement('ally');if(this.enemies.length<target)await this.addReinforcement('enemy')}this.log.textContent=`雙方增援完成：${this.allies.length} 對 ${this.enemies.length}`;Sound.next();await delay(450)},
-  async addReinforcement(side){const list=side==='ally'?this.allies:this.enemies;if(list.length>=this.maxUnits)return;const index=list.length;const name=side==='ally'?`隊友 ${String.fromCharCode(64+index)}`:`薩克 ${index+1}`;const unit=new WarUnit(side,index,name);list.push(unit);this.render();const el=this.elFor(unit);if(el){const x=side==='ally'?-130:130;el.animate([{opacity:0,transform:`translateX(${x}px) scale(.72)`},{opacity:1,transform:'translateX(0) scale(1)'}],{duration:520,easing:'cubic-bezier(.2,.9,.2,1)'});this.log.textContent=`${name} 進入戰場！`}await delay(560)}
+  async answer(value,btn){
+    if(game.phase!=='question'||game.paused)return;
+    game.phase='acting';
+    this.panel.disable();
+    const ok=value===game.question.answer;
+    this.panel.mark(value,game.question.answer,btn);
+    applyAnswerScore(ok);
+    await delay(330);
+    this.overlay.classList.remove('show');
+    await delay(180);
+    if(!ok){
+      this.log.textContent='答案錯誤，先確認正確算式';
+      await AnswerReview.show(game.question,value);
+      if(!game.running)return;
+      this.log.textContent='敵軍開始反擊！';
+    }
+    const ctx=new WarTurnContext(this,ok);
+    await ctx.run();
+    this.render();
+    if(!this.allies[0].alive){
+      finish(false,{enemyDown:this.enemies.filter(x=>!x.alive).length,alliesLeft:this.allies.filter(x=>x.alive).length});
+      return;
+    }
+    await this.checkReinforcements();
+    if(this.enemies.length>=this.maxUnits&&!this.enemies.some(x=>x.alive)){
+      finish(true,{enemyDown:this.maxUnits,alliesLeft:this.allies.filter(x=>x.alive).length});
+      return;
+    }
+    await delay(420);
+    this.ask();
+  },
+  desiredDeployment(){
+    let target=4;
+    if(game.round>=2)target=5;
+    if(game.round>=4)target=6;
+    if(!this.enemies.some(x=>x.alive)&&this.enemies.length<this.maxUnits)target=Math.max(target,this.enemies.length+1);
+    return Math.min(this.maxUnits,target);
+  },
+  async checkReinforcements(){
+    const target=this.desiredDeployment();
+    if(this.allies.length>=target&&this.enemies.length>=target)return;
+    const wave=target===5?'第一波援軍抵達！':'第二波援軍抵達！';
+    await this.banner(wave,'var(--gold)');
+    while(this.allies.length<target||this.enemies.length<target){
+      if(this.allies.length<target)await this.addReinforcement('ally');
+      if(this.enemies.length<target)await this.addReinforcement('enemy');
+    }
+    this.log.textContent=`雙方增援完成：${this.allies.length} 對 ${this.enemies.length}｜${this.enemyStrengthText()}`;
+    Sound.next();
+    await delay(450);
+  },
+  async addReinforcement(side){
+    const list=side==='ally'?this.allies:this.enemies;
+    if(list.length>=this.maxUnits)return;
+    const index=list.length;
+    const name=side==='ally'?`隊友 ${String.fromCharCode(64+index)}`:`薩克 ${index+1}`;
+    const stats=side==='enemy'?this.enemyStats():{};
+    const unit=new WarUnit(side,index,name,false,stats);
+    list.push(unit);
+    this.render();
+    const el=this.elFor(unit);
+    if(el){
+      const x=side==='ally'?-130:130;
+      el.animate([{opacity:0,transform:`translateX(${x}px) scale(.72)`},{opacity:1,transform:'translateX(0) scale(1)'}],{duration:520,easing:'cubic-bezier(.2,.9,.2,1)'});
+      this.log.textContent=`${name}（Lv.${unit.rank}）進入戰場！`;
+    }
+    await delay(560);
+  }
 });
