@@ -9,12 +9,12 @@ const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1])
    Shared domain / data modules
    ========================= */
 const MODES={
-  beginner:{name:'新手區',multipliers:[1,10],review:'一位數加減法'},
-  level1:{name:'熟手 Level 1',multipliers:[2,3],review:'一／二位數加減法'},
-  level2:{name:'熟手 Level 2',multipliers:[2,3,4,5],review:'一／二位數加減法'},
-  level3:{name:'熟手 Level 3',multipliers:[2,3,4,5,6,7],review:'100 以內加減法'},
-  battle:{name:'實戰模式',multipliers:[1,2,3,4,5,6,7,8,9],review:'三位數 ± 二位數'},
-  war:{name:'戰爭模式',multipliers:[1,2,3,4,5,6,7,8,9],review:'三位數 ± 二位數'}
+  beginner:{name:'新手區',multipliers:[1,10],review:'兩個數皆 200 以內的加減法'},
+  level1:{name:'熟手 Level 1',multipliers:[2,3],review:'兩個數皆 200 以內的加減法'},
+  level2:{name:'熟手 Level 2',multipliers:[2,3,4,5],review:'兩個數皆 200 以內的加減法'},
+  level3:{name:'熟手 Level 3',multipliers:[2,3,4,5,6,7],review:'兩個數皆 200 以內的加減法'},
+  battle:{name:'實戰模式',multipliers:[1,2,3,4,5,6,7,8,9],review:'兩個數皆 200 以內的加減法'},
+  war:{name:'戰爭模式',multipliers:[1,2,3,4,5,6,7,8,9],review:'兩個數皆 200 以內的加減法'}
 };
 const LEVEL_ORDER=['beginner','level1','level2','level3','battle','war'];
 const game={running:false,paused:false,sound:true,level:'beginner',stage:1,score:0,combo:0,correctCount:0,round:0,question:null,phase:'idle',best:Number(localStorage.gundamMathBest||0),mastery:JSON.parse(localStorage.gundamMathMastery||'{}')};
