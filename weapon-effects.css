@@ -1,26 +1,54 @@
-/* Shared weapon FX for duel, campaign and war scenes. */
+/* Sprite-driven weapon FX shared by duel, campaign and war scenes. */
 .weapon-muzzle,.weapon-impact,.weapon-beam,.weapon-bullet,.weapon-saber,.weapon-axe,.weapon-slash{position:absolute;z-index:30;pointer-events:none}
-.weapon-muzzle{width:22px;height:22px;border-radius:50%;background:#fff7ba;box-shadow:0 0 8px #fff,0 0 20px #ff65e7,0 0 34px #46dcff}
-.weapon-muzzle:before,.weapon-muzzle:after{content:"";position:absolute;left:50%;top:50%;width:34px;height:4px;background:#fff;transform:translate(-50%,-50%);box-shadow:0 0 10px #ff62e4}
-.weapon-muzzle:after{transform:translate(-50%,-50%) rotate(90deg)}
-.weapon-muzzle.enemy{background:#fff1a8;box-shadow:0 0 8px #fff,0 0 20px #ffac38,0 0 34px #ff5b31}
-.weapon-muzzle.enemy:before,.weapon-muzzle.enemy:after{box-shadow:0 0 10px #ff7e2d}
-.weapon-beam{width:38px;height:5px;margin-left:-19px;margin-top:-2px;border-radius:999px;background:#fff;box-shadow:0 0 6px #fff,0 0 14px #ff4fe1,0 0 24px #4bdfff;transform-origin:center}
-.weapon-bullet{width:14px;height:4px;margin-left:-7px;margin-top:-2px;border-radius:999px;background:#fff4a5;box-shadow:0 0 5px #fff,0 0 12px #ff9b32}
-.weapon-impact{width:26px;height:26px;border-radius:50%;background:radial-gradient(circle,#fff 0 18%,#ffec65 19% 34%,#ff6d38 35% 54%,transparent 56%);filter:drop-shadow(0 0 8px #ffb33d)}
-.weapon-impact.enemy{background:radial-gradient(circle,#fff 0 18%,#ffd96d 19% 34%,#ff5138 35% 54%,transparent 56%)}
-.weapon-saber,.weapon-axe{width:9px;height:74px;border-radius:999px;transform-origin:50% 88%;background:#fff;box-shadow:0 0 8px #fff,0 0 16px #ff4ed8,0 0 28px #d929ff}
-.weapon-saber:after{content:"";position:absolute;left:50%;bottom:-13px;transform:translateX(-50%);width:14px;height:18px;border-radius:4px;background:#d9e2ea;box-shadow:inset 0 0 0 2px #596775}
-.weapon-axe{width:11px;height:56px;background:#4d5560;box-shadow:none}
-.weapon-axe:before{content:"";position:absolute;left:-18px;top:-5px;width:42px;height:24px;background:linear-gradient(135deg,#fff7a8,#ffb139 45%,#ff5a28);clip-path:polygon(0 18%,100% 0,72% 100%,13% 72%);filter:drop-shadow(0 0 7px #ff7c2d)}
-.weapon-slash{width:12px;height:88px;border-radius:999px;background:#fff;box-shadow:0 0 8px #fff,0 0 20px #ff54dc,0 0 38px #d72bff;transform-origin:center}
-.weapon-slash.enemy{background:#fff6bd;box-shadow:0 0 8px #fff,0 0 20px #ffad38,0 0 38px #ff542e}
+.weapon-muzzle,.weapon-impact,.weapon-beam,.weapon-bullet,.weapon-slash{
+  width:42px;height:42px;margin:-21px 0 0 -21px;
+  background-image:url('./weapon-sprites.svg');background-repeat:no-repeat;background-size:400% 500%;
+  image-rendering:auto;filter:drop-shadow(0 0 7px currentColor)
+}
+.weapon-muzzle{color:#ff67df;background-position-y:0%;animation:fxSprite .18s steps(3) forwards}
+.weapon-muzzle.enemy{color:#ff8c38;filter:hue-rotate(-35deg) saturate(1.35) drop-shadow(0 0 7px #ff7b31)}
+.weapon-impact{color:#ff9a3c;background-position-y:25%;animation:fxSprite .25s steps(3) forwards}
+.weapon-impact.enemy{filter:hue-rotate(-22deg) saturate(1.3) drop-shadow(0 0 8px #ff6338)}
+.weapon-slash{width:64px;height:64px;margin:-32px 0 0 -32px;color:#e43cff;background-position-y:50%;animation:fxSprite .29s steps(3) forwards;transform-origin:center}
+.weapon-slash.enemy{filter:hue-rotate(-62deg) saturate(1.7) drop-shadow(0 0 8px #ff8a30)}
+.weapon-beam,.weapon-bullet{width:38px;height:28px;margin:-14px 0 0 -19px;background-position-y:100%;animation:fxProjectile .22s steps(3) infinite;color:#ff57dc;transform-origin:center}
+.weapon-bullet{width:28px;height:22px;margin:-11px 0 0 -14px;filter:hue-rotate(-70deg) saturate(1.5) drop-shadow(0 0 5px #ff9a32)}
+@keyframes fxSprite{from{background-position-x:0}to{background-position-x:100%}}
+@keyframes fxProjectile{from{background-position-x:0}to{background-position-x:100%}}
+
+/* The blade body stays attached to the moving mech; its energy pulse is sprite-driven. */
+.weapon-saber,.weapon-axe{width:18px;height:82px;margin:-66px 0 0 -9px;transform-origin:50% 88%;background:#171d27;border-radius:5px}
+.weapon-saber:before,.weapon-axe:before{
+  content:"";position:absolute;inset:-6px -22px -4px -22px;background-image:url('./weapon-sprites.svg');
+  background-repeat:no-repeat;background-size:400% 500%;background-position-y:75%;animation:fxSprite .32s steps(3) infinite;filter:drop-shadow(0 0 9px #e63cff)
+}
+.weapon-saber:after{content:"";position:absolute;left:2px;right:2px;bottom:-7px;height:18px;border-radius:4px;background:#cdd6df;box-shadow:inset 0 0 0 2px #536070}
+.weapon-axe{height:56px;background:#555e68}
+.weapon-axe:before{filter:hue-rotate(-65deg) saturate(1.7) drop-shadow(0 0 9px #ff7b2e)}
+.weapon-axe:after{content:"";position:absolute;left:-18px;top:-7px;width:44px;height:25px;background:linear-gradient(135deg,#fff7a8,#ffb139 45%,#ff5a28);clip-path:polygon(0 18%,100% 0,72% 100%,13% 72%);filter:drop-shadow(0 0 7px #ff7c2d)}
+
+/* Sprite pose states for the current SD character sprite. */
+.robot.sprite-aim{animation:spriteAim .16s steps(2) both}
+.robot.sprite-fire{animation:spriteFire .18s steps(2) both}
+.robot.sprite-melee{animation:spriteMelee .3s steps(3) both}
+.robot.sprite-hit{animation:spriteHit .22s steps(2) both}
+@keyframes spriteAim{0%{rotate:0deg;translate:0 0}100%{rotate:-2deg;translate:2px -1px}}
+@keyframes spriteFire{0%,100%{translate:0 0}50%{translate:-7px 1px;rotate:-3deg}}
+.enemy .robot.sprite-fire,.enemy-formation .robot.sprite-fire{animation-name:spriteFireEnemy}
+@keyframes spriteFireEnemy{0%,100%{translate:0 0}50%{translate:7px 1px;rotate:3deg}}
+@keyframes spriteMelee{0%{rotate:0}45%{rotate:-7deg}100%{rotate:7deg}}
+@keyframes spriteHit{0%,100%{filter:drop-shadow(0 14px 12px #000a)}50%{filter:brightness(2.2) drop-shadow(0 0 15px #fff)}}
 .weapon-recoil{animation:weaponRecoil .2s ease-in-out}
 @keyframes weaponRecoil{0%,100%{translate:0 0}45%{translate:-5px 0}}
 .enemy .weapon-recoil,.enemy-formation .weapon-recoil{animation-name:weaponRecoilEnemy}
 @keyframes weaponRecoilEnemy{0%,100%{translate:0 0}45%{translate:5px 0}}
+
+.war-field.ally-volley{box-shadow:inset 12px 0 38px #51dfff18,inset -12px 0 38px transparent}
+.war-field.enemy-volley{box-shadow:inset -12px 0 38px #ff5c4218,inset 12px 0 38px transparent}
+
 @media(max-width:540px){
-  .weapon-muzzle{width:16px;height:16px}.weapon-muzzle:before,.weapon-muzzle:after{width:25px;height:3px}
-  .weapon-beam{width:28px;height:4px}.weapon-bullet{width:10px;height:3px}
-  .weapon-impact{width:20px;height:20px}.weapon-saber{height:58px}.weapon-axe{height:46px}.weapon-slash{height:68px;width:9px}
+  .weapon-muzzle,.weapon-impact{width:30px;height:30px;margin:-15px 0 0 -15px}
+  .weapon-beam{width:30px;height:22px;margin:-11px 0 0 -15px}.weapon-bullet{width:23px;height:18px;margin:-9px 0 0 -12px}
+  .weapon-slash{width:50px;height:50px;margin:-25px 0 0 -25px}
+  .weapon-saber{height:62px;margin-top:-50px}.weapon-axe{height:46px;margin-top:-38px}
 }
