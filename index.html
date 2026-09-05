@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>鋼彈九九大作戰</title>
+<link rel="manifest" href="./manifest.webmanifest" />
+<meta name="theme-color" content="#081321" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="鋼彈九九" />
+<link rel="apple-touch-icon" href="./icons/icon-192.png" />
+<link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+<div id="game">
+  <div class="topbar">
+    <div class="title">鋼彈 <b>九九</b> 大作戰</div>
+    <div class="stats"><div class="chip">分數 <strong id="score">0</strong></div><div class="chip">連擊 <strong id="combo">0</strong></div><div class="chip">最佳 <strong id="best">0</strong></div></div>
+  </div>
+  <div class="mission">
+    <div class="card progress-card"><div class="progress-head"><span>九九乘法熟練度</span><span id="progressText">0 / 81</span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+    <div class="card mode-card"><div><div class="mode-label">目前任務</div><div class="mode-value" id="modeText">選擇關卡</div></div><div id="streakText">答對 0 題</div></div>
+  </div>
+
+  <div class="stage-wrap">
+    <!-- Scene 1: training duel. Independent controller: DuelScene -->
+    <main class="scene" id="duelScene">
+      <div class="duel-layout">
+        <div class="fighter hero">
+          <div class="fighter-name">RX 教學鋼彈</div><div class="hpbar"><div class="hpfill" id="duelHeroHP"></div></div>
+          <div class="robot" id="duelHeroRobot"><i class="part v1"></i><i class="part v2"></i><i class="part head"></i><i class="part face"></i><i class="part visor"></i><i class="part chest"></i><i class="part chest2"></i><i class="part waist"></i><i class="part skirt1"></i><i class="part skirt2"></i><i class="part armL"></i><i class="part armR"></i><i class="part legL"></i><i class="part legR"></i><i class="part footL"></i><i class="part footR"></i><i class="part beam"></i></div>
+        </div>
+        <section class="question-panel" id="duelQuestionPanel"><div class="round-tag"></div><div class="question"></div><div class="hint"></div><div class="answers"></div></section>
+        <div class="fighter enemy">
+          <div class="fighter-name">薩克練習兵</div><div class="hpbar"><div class="hpfill" id="duelEnemyHP"></div></div>
+          <div class="robot" id="duelEnemyRobot"><i class="part spike"></i><i class="part head"></i><i class="part visor"></i><i class="part eye"></i><i class="part chest"></i><i class="part waist"></i><i class="part skirt1"></i><i class="part skirt2"></i><i class="part shoulder"></i><i class="part armL"></i><i class="part armR"></i><i class="part legL"></i><i class="part legR"></i><i class="part footL"></i><i class="part footR"></i><i class="part axe"></i></div>
+        </div>
+      </div><div class="feedback"></div>
+    </main>
+
+    <!-- Scene 2: sequential real battle. Independent controller: CampaignScene -->
+    <main class="scene" id="campaignScene">
+      <div class="duel-layout">
+        <div class="fighter hero">
+          <div class="fighter-name">RX 實戰鋼彈</div><div class="hpbar"><div class="hpfill" id="campaignHeroHP"></div></div>
+          <div class="robot" id="campaignHeroRobot"><i class="part v1"></i><i class="part v2"></i><i class="part head"></i><i class="part face"></i><i class="part visor"></i><i class="part chest"></i><i class="part chest2"></i><i class="part waist"></i><i class="part skirt1"></i><i class="part skirt2"></i><i class="part armL"></i><i class="part armR"></i><i class="part legL"></i><i class="part legR"></i><i class="part footL"></i><i class="part footR"></i><i class="part beam"></i></div>
+        </div>
+        <section class="question-panel" id="campaignQuestionPanel"><div class="round-tag"></div><div class="question"></div><div class="hint"></div><div class="answers"></div></section>
+        <div class="fighter enemy">
+          <div class="fighter-name" id="campaignEnemyName">薩克實戰兵 1 號</div><div class="hpbar"><div class="hpfill" id="campaignEnemyHP"></div></div><div class="squad-status" id="campaignSquad"></div>
+          <div class="robot" id="campaignEnemyRobot"><i class="part spike"></i><i class="part head"></i><i class="part visor"></i><i class="part eye"></i><i class="part chest"></i><i class="part waist"></i><i class="part skirt1"></i><i class="part skirt2"></i><i class="part shoulder"></i><i class="part armL"></i><i class="part armR"></i><i class="part legL"></i><i class="part legR"></i><i class="part footL"></i><i class="part footR"></i><i class="part axe"></i></div>
+        </div>
+      </div><div class="feedback"></div>
+    </main>
+
+    <!-- Scene 3: simultaneous formations. Independent controller: WarScene -->
+    <main class="scene" id="warScene">
+      <div class="war-hud"><div class="war-side-status" id="warAllyStatus">我方 4 / 4｜預備 2</div><div class="war-stage-title" id="warStageTitle">戰爭 1</div><div class="war-side-status enemy-side" id="warEnemyStatus">敵軍 4 / 4｜預備 2</div></div>
+      <div class="war-field" id="warField">
+        <div class="formation ally-formation" id="allyFormation"></div><div class="war-center"></div><div class="formation enemy-formation" id="enemyFormation"></div>
+        <div class="formation-label ally">ALLIED FORMATION</div><div class="formation-label foe">ZAKU FORMATION</div>
+        <div class="battle-log" id="battleLog">待命中</div>
+      </div>
+      <div class="war-turn-banner" id="warTurnBanner"></div>
+      <div class="war-question-overlay" id="warQuestionOverlay"><div class="war-question-card"><section class="question-panel" id="warQuestionPanel"><div class="round-tag"></div><div class="question"></div><div class="hint"></div><div class="answers"></div></section></div></div>
+    </main>
+
+    <div class="answer-review-overlay" id="answerReviewOverlay" aria-live="assertive">
+      <div class="answer-review-card">
+        <div class="answer-review-title">再看一次正確答案</div>
+        <div class="answer-review-sub">先把算式看清楚，再繼續戰鬥</div>
+        <div class="answer-review-equation" id="answerReviewEquation"></div>
+        <div class="answer-review-answer"><span class="mine" id="answerReviewMine"></span><span>→</span><span class="correct" id="answerReviewCorrect"></span></div>
+        <div class="answer-review-tip" id="answerReviewTip"></div>
+        <button class="answer-review-btn" id="answerReviewBtn">我看懂了，繼續戰鬥</button>
+        <div class="answer-review-note">提示不會自動消失，可以慢慢看。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls"><button class="install-btn" id="installBtn" type="button">安裝遊戲</button><button class="ctrl" id="pauseBtn">暫停</button><button class="ctrl" id="soundBtn">音效：開</button><button class="ctrl" id="tableBtn">九九表</button><button class="ctrl" id="resetBtn">重新開始</button><button class="ctrl" id="selectBtn">回到選關</button></div>
+</div>
+
+<div class="overlay" id="startOverlay"><div class="dialog"><h1>鋼彈 <span>九九</span> 大作戰</h1><p>九九乘法為主，穿插加減法。一般練習、實戰、戰爭採用不同場景控制器，互不干擾。</p><div class="select-row">
+<button class="on" data-level="beginner">新手區<br><span class="small">1×1～9、10×1～9＋一位數加減</span></button>
+<button data-level="level1">熟手 Level 1<br><span class="small">2、3 的乘法＋一／二位數加減</span></button>
+<button data-level="level2">熟手 Level 2<br><span class="small">2～5 的乘法＋一／二位數加減</span></button>
+<button data-level="level3">熟手 Level 3<br><span class="small">2～7 的乘法＋100 以內加減</span></button>
+<button data-level="battle">實戰模式<br><span class="small">完整九九＋三位數 ± 二位數，一關連戰 5 隻薩克</span></button>
+<button data-level="war">戰爭模式<br><span class="small">初始 4 對 4，中途雙方增援，最終擴編為 6 對 6</span></button>
+</div><button class="start" id="startBtn">出擊！</button><p class="small">滑鼠／觸控，或鍵盤 <span class="kbd">1</span>～<span class="kbd">4</span> 作答。學習紀錄保存在本機瀏覽器。</p></div></div>
+<div class="overlay hidden" id="tableOverlay"><div class="dialog"><h1>九九乘法進度</h1><div class="table-grid" id="tableGrid"></div><p class="small">每格累積答對 2 次即熟練。10 的乘法屬新手暖身，不計入 81 格九九進度。</p><button class="start" id="closeTable">回到戰鬥</button></div></div>
+<div class="overlay hidden" id="endOverlay"><div class="dialog"><h1 id="endTitle">任務完成！</h1><p id="endText"></p><div class="end-actions"><button class="start" id="nextBtn">下一關</button><button class="start secondary" id="backSelectBtn">回到選關</button></div></div></div>
+
+<div class="install-toast" id="installToast" role="status" aria-live="polite"></div>
+<script src="./app.js" defer></script>
+</body>
+</html>
