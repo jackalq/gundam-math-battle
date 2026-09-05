@@ -1,85 +1,52 @@
 .war-unit{
-  position:relative;min-height:158px;border:1px solid #42617d;border-radius:16px;
+  position:relative;min-width:0;min-height:0;height:100%;
+  border:1px solid #42617d;border-radius:12px;
   background:linear-gradient(155deg,#152e4add,#07111ef2 72%);
-  box-shadow:0 10px 25px #0008,inset 0 1px #b8dcff24;
-  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:7px;
-  transition:.25s;overflow:visible
+  box-shadow:0 6px 16px #0008,inset 0 1px #b8dcff24;
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+  padding:4px 5px;transition:.25s;overflow:hidden
 }
-.war-unit:before{content:"";position:absolute;inset:4px;border-radius:12px;border:1px solid #9ac7f010;pointer-events:none}
-.war-unit.frontline{border-color:#4d94bf;box-shadow:0 0 18px #40c9ff16,0 10px 25px #0008}
-.enemy-formation .war-unit.frontline{border-color:#a94b52;box-shadow:0 0 18px #ff445516,0 10px 25px #0008}
-.war-unit.player{border:2px solid var(--gold);box-shadow:0 0 0 2px #ffe36c22,0 0 24px #ffd84c25,0 8px 25px #0008}
+.war-unit:before{content:"";position:absolute;inset:3px;border-radius:9px;border:1px solid #9ac7f010;pointer-events:none}
+.war-unit.frontline{border-color:#4d94bf;box-shadow:0 0 12px #40c9ff16,0 6px 16px #0008}
+.enemy-formation .war-unit.frontline{border-color:#a94b52;box-shadow:0 0 12px #ff445516,0 6px 16px #0008}
+.war-unit.player{border:2px solid var(--gold);box-shadow:0 0 0 1px #ffe36c22,0 0 16px #ffd84c25,0 6px 16px #0008}
 .war-unit.veteran{background:linear-gradient(155deg,#273d31e8,#0a1612f4 72%);border-color:#77945c}
-.war-unit.elite{background:linear-gradient(155deg,#40202de8,#160b12f4 72%);border-color:#c54c6a;box-shadow:0 0 24px #ff406527,0 10px 25px #0009}
-.war-unit.destroyed{opacity:.23;filter:grayscale(1);transform:translateY(8px) rotate(3deg)!important}
+.war-unit.elite{background:linear-gradient(155deg,#40202de8,#160b12f4 72%);border-color:#c54c6a;box-shadow:0 0 18px #ff406527,0 6px 16px #0009}
+.war-unit.destroyed{opacity:.23;filter:grayscale(1);translate:0 4px;rotate:2deg}
 .war-unit.firing{animation:warFire .35s ease}
-@keyframes warFire{0%,100%{translate:0}50%{translate:12px 0}}
+@keyframes warFire{0%,100%{translate:0}50%{translate:8px 0}}
 .enemy-formation .war-unit.firing{animation:warFireEnemy .35s ease}
-@keyframes warFireEnemy{0%,100%{translate:0}50%{translate:-12px 0}}
+@keyframes warFireEnemy{0%,100%{translate:0}50%{translate:-8px 0}}
 .war-unit.unit-hit{animation:warHit .38s linear}
-@keyframes warHit{0%,100%{filter:none}25%,75%{filter:brightness(2.4) drop-shadow(0 0 16px #fff)}50%{translate:7px 0}}
+@keyframes warHit{0%,100%{filter:none}25%,75%{filter:brightness(2.3) drop-shadow(0 0 12px #fff)}50%{translate:5px 0}}
 .enemy-formation .war-unit.unit-hit{animation:warHitEnemy .38s linear}
-@keyframes warHitEnemy{0%,100%{filter:none}25%,75%{filter:brightness(2.4) drop-shadow(0 0 16px #fff)}50%{translate:-7px 0}}
+@keyframes warHitEnemy{0%,100%{filter:none}25%,75%{filter:brightness(2.3) drop-shadow(0 0 12px #fff)}50%{translate:-5px 0}}
 
-.unit-name{width:100%;display:flex;justify-content:space-between;gap:5px;font-size:10px;font-weight:1000;color:#d8e6f4;position:relative;z-index:4}
-.unit-name .you{color:var(--gold)}.unit-name em{font-style:normal;color:#ffb2a4;font-size:9px}
-.unit-hp{width:100%;height:7px;border-radius:999px;background:#311d23;overflow:hidden;margin:3px 0 2px;position:relative;z-index:4}
+.unit-name{
+  width:100%;min-width:0;display:flex;justify-content:space-between;gap:3px;
+  font-size:9px;font-weight:1000;color:#d8e6f4;position:relative;z-index:4;line-height:1.05
+}
+.unit-name span:first-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.unit-name span:last-child{flex:0 0 auto}
+.unit-name .you{color:var(--gold)}.unit-name em{font-style:normal;color:#ffb2a4;font-size:8px}
+.unit-hp{width:100%;height:5px;border-radius:999px;background:#311d23;overflow:hidden;margin:2px 0;position:relative;z-index:4}
 .unit-hp i{display:block;height:100%;background:linear-gradient(90deg,#42d775,#8df49a);transition:.25s}
 .enemy-formation .unit-hp i{background:linear-gradient(90deg,#df4657,#ff8865)}
-.formation-role{position:absolute;top:31px;right:7px;font-size:8px;font-weight:1000;letter-spacing:.08em;color:#8db7d7;background:#07111eb8;border:1px solid #355672;border-radius:999px;padding:2px 5px}
+.formation-role{
+  position:absolute;top:21px;right:4px;font-size:6px;font-weight:1000;letter-spacing:.06em;
+  color:#8db7d7;background:#07111ec9;border:1px solid #355672;border-radius:999px;padding:1px 4px;z-index:5
+}
 .enemy-formation .formation-role{color:#e7a8a4;border-color:#6d3e44}
 
-.mini-mech{position:relative;width:76px;height:104px;filter:drop-shadow(0 7px 6px #000b);margin:0 0 1px;transform-origin:50% 80%}
-.mini-mech i{position:absolute;display:block;box-sizing:border-box}
-.m-backpack{left:17px;top:31px;width:42px;height:33px;background:#243747;border:2px solid #09131d;border-radius:5px}
-.m-antenna{left:28px;top:-4px;width:20px;height:17px;border-left:4px solid #f0d44f;border-right:4px solid #f0d44f;clip-path:polygon(0 0,35% 100%,50% 55%,65% 100%,100% 0,70% 70%,50% 38%,30% 70%)}
-.m-head{left:25px;top:7px;width:27px;height:22px;background:linear-gradient(#f7fbff,#bac7d2);border:2px solid #101a24;clip-path:polygon(12% 0,88% 0,100% 36%,82% 100%,18% 100%,0 36%)}
-.m-eye{left:30px;top:14px;width:17px;height:4px;background:#78e8ff;box-shadow:0 0 9px #42dfff}
-.m-neck{left:31px;top:27px;width:14px;height:8px;background:#303f4b;border:2px solid #0d1720}
-.m-body{left:17px;top:33px;width:42px;height:32px;background:linear-gradient(135deg,#2478c9,#174b86);border:2px solid #101a24;clip-path:polygon(9% 0,91% 0,100% 31%,84% 100%,16% 100%,0 31%)}
-.m-core{left:31px;top:42px;width:14px;height:13px;background:linear-gradient(#ed5965,#a82635);border:1px solid #6e1821}
-.m-shoulder1,.m-shoulder2{top:33px;width:19px;height:15px;background:#e7edf2;border:2px solid #101a24;clip-path:polygon(8% 20%,75% 0,100% 50%,75% 100%,0 82%)}
-.m-shoulder1{left:3px}.m-shoulder2{right:3px;transform:scaleX(-1)}
-.m-arm1,.m-arm2{top:45px;width:10px;height:31px;background:linear-gradient(#e9f0f5,#aebbc5);border:2px solid #101a24;border-radius:3px}
-.m-arm1{left:8px;transform:rotate(6deg)}.m-arm2{right:8px;transform:rotate(-6deg)}
-.m-shield{right:-1px;top:47px;width:16px;height:29px;background:linear-gradient(135deg,#f0f4f7,#aab8c2);border:2px solid #101a24;clip-path:polygon(10% 0,90% 8%,100% 72%,50% 100%,0 72%)}
-.m-gun{right:-10px;top:55px;width:31px;height:7px;background:#283844;border:2px solid #0b141d;border-radius:2px;transform:rotate(-7deg);transform-origin:left center;transition:.15s}
-.m-gun:after{content:"";position:absolute;right:-9px;top:0;width:11px;height:3px;background:#617989;border-radius:2px}
-.m-blade{right:-17px;top:43px;width:5px;height:40px;background:#9bffff;border-radius:999px;box-shadow:0 0 7px #7ff,0 0 16px #29e9ff;transform:rotate(32deg) scaleY(.2);transform-origin:50% 100%;opacity:0;transition:.15s}
-.m-skirt{left:20px;top:63px;width:36px;height:15px;background:#dfe7ec;border:2px solid #101a24;clip-path:polygon(0 0,100% 0,88% 100%,56% 78%,50% 100%,44% 78%,12% 100%)}
-.m-leg1,.m-leg2{top:76px;width:14px;height:24px;background:linear-gradient(#eaf0f4,#a7b6c1);border:2px solid #101a24}
-.m-leg1{left:20px;transform:rotate(2deg)}.m-leg2{right:20px;transform:rotate(-2deg)}
-.m-knee1,.m-knee2{top:81px;width:9px;height:10px;background:#286bb2;clip-path:polygon(50% 0,100% 100%,0 100%)}.m-knee1{left:22px}.m-knee2{right:22px}
-.m-foot1,.m-foot2{top:97px;width:19px;height:7px;background:#293b49;border:2px solid #0d171f;border-radius:2px 5px 2px 2px}.m-foot1{left:14px}.m-foot2{right:14px;transform:scaleX(-1)}
-.m-thruster1,.m-thruster2{top:57px;width:6px;height:12px;background:#182a36;border-radius:0 0 5px 5px}.m-thruster1{left:20px}.m-thruster2{right:20px}
-
-.war-unit.using-melee .m-gun{opacity:.15;transform:rotate(-7deg) scale(.7)}
-.war-unit.using-melee .m-blade{opacity:1;transform:rotate(32deg) scaleY(1)}
-.war-unit.using-ranged .m-gun{filter:brightness(1.8) drop-shadow(0 0 5px #8dfcff)}
-
-.mini-mech.zaku{transform:scaleX(-1)}
-.mini-mech.zaku .m-antenna{left:37px;top:-2px;width:3px;height:14px;background:#879f66;border:0;clip-path:polygon(50% 0,100% 100%,0 100%)}
-.mini-mech.zaku .m-head{background:linear-gradient(#779c62,#405c3c);border-radius:13px 13px 8px 8px;clip-path:none}
-.mini-mech.zaku .m-head:after{content:"";position:absolute;left:2px;right:2px;top:8px;height:6px;border-top:2px solid #263c27;border-bottom:2px solid #263c27}
-.mini-mech.zaku .m-eye{left:35px;top:16px;width:6px;height:6px;border-radius:50%;background:#ff3d53;box-shadow:0 0 10px #ff3148}
-.mini-mech.zaku .m-body{background:linear-gradient(135deg,#6f995e,#3e603c)}
-.mini-mech.zaku .m-core{background:#354f32;border-radius:50%;border-color:#263b24}
-.mini-mech.zaku .m-shoulder1{background:#688d58;border-radius:8px 3px 3px 8px}
-.mini-mech.zaku .m-shoulder1:before{content:"";position:absolute;left:-7px;top:4px;border-top:4px solid transparent;border-bottom:4px solid transparent;border-right:9px solid #779e63}
-.mini-mech.zaku .m-shoulder2{background:#527745;border-radius:3px}
-.mini-mech.zaku .m-arm1,.mini-mech.zaku .m-arm2,.mini-mech.zaku .m-leg1,.mini-mech.zaku .m-leg2{background:linear-gradient(#698f58,#466a42)}
-.mini-mech.zaku .m-skirt{background:#486c43}
-.mini-mech.zaku .m-knee1,.mini-mech.zaku .m-knee2{background:#314e32}
-.mini-mech.zaku .m-shield{background:#536f47;right:-3px;top:40px;width:18px;height:34px;border-radius:3px;clip-path:none}
-.mini-mech.zaku .m-gun{background:#273329}
-.mini-mech.zaku .m-blade{background:#ff9d4b;box-shadow:0 0 7px #ff8b38,0 0 16px #ff4b28;width:7px;border-radius:3px}
-.war-unit.veteran .mini-mech.zaku{filter:drop-shadow(0 7px 6px #000b) hue-rotate(16deg) saturate(1.12)}
-.war-unit.elite .mini-mech.zaku{filter:drop-shadow(0 0 8px #ff3c5a55) hue-rotate(275deg) saturate(1.3)}
-
-.battle-log{position:absolute;z-index:7;left:50%;bottom:46px;transform:translateX(-50%);width:min(560px,82%);text-align:center;background:#050c16e8;border:1px solid #365572;border-radius:999px;padding:8px 13px;font-weight:900;color:#d9e8f7;opacity:.94}
-.war-projectile{position:absolute;z-index:12;width:24px;height:5px;border-radius:999px;background:#8dfcff;box-shadow:0 0 7px #8dfcff,0 0 18px #52dfff;pointer-events:none}
+.battle-log{
+  position:absolute;z-index:7;left:50%;bottom:38px;transform:translateX(-50%);
+  width:min(520px,78%);text-align:center;background:#050c16e8;border:1px solid #365572;
+  border-radius:999px;padding:6px 10px;font-size:12px;font-weight:900;color:#d9e8f7;opacity:.94;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+.war-projectile{position:absolute;z-index:12;width:22px;height:5px;border-radius:999px;background:#8dfcff;box-shadow:0 0 7px #8dfcff,0 0 18px #52dfff;pointer-events:none}
 .war-projectile.enemy-shot{background:#ffb14d;box-shadow:0 0 7px #ffae48,0 0 18px #ff5138}
-.war-slash{position:absolute;z-index:14;width:10px;height:72px;border-radius:999px;background:#baffff;box-shadow:0 0 8px #fff,0 0 18px #3ff1ff,0 0 34px #15cce8;pointer-events:none;transform-origin:center}
+.war-slash{position:absolute;z-index:14;width:9px;height:62px;border-radius:999px;background:#baffff;box-shadow:0 0 8px #fff,0 0 18px #3ff1ff,0 0 34px #15cce8;pointer-events:none;transform-origin:center}
 .war-slash.enemy-slash{background:#ffbd64;box-shadow:0 0 8px #fff4d2,0 0 18px #ff8c38,0 0 34px #ff432e}
 .explosion{position:absolute;z-index:13;width:18px;height:18px;border-radius:50%;background:#fff3a1;box-shadow:0 0 10px #fff,0 0 28px #ff9f32,0 0 48px #ff5438;pointer-events:none}
 
@@ -95,8 +62,14 @@
 @keyframes turnBanner{0%{opacity:0;transform:translate(-50%,-50%) scale(.65)}25%,75%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-60%) scale(1)}}
 
 @media(max-width:680px){
-  .war-unit{min-height:137px;padding:5px}
-  .mini-mech{transform:scale(.84);margin:-8px 0 -7px}
-  .mini-mech.zaku{transform:scaleX(-1) scale(.84)}
-  .unit-name{font-size:8px}.unit-name em{font-size:7px}.formation-role{top:27px;font-size:7px}
+  .war-unit{border-radius:8px;padding:3px}
+  .unit-name{font-size:7px}.unit-name em{font-size:6px}
+  .unit-hp{height:4px;margin:1px 0}
+  .formation-role{top:16px;right:2px;font-size:5px;padding:1px 2px}
+  .battle-log{bottom:35px;width:86%;font-size:9px;padding:5px 7px}
+}
+
+@media(max-width:390px){
+  .unit-name{font-size:6px}.formation-role{display:none}
+  .battle-log{font-size:8px}
 }
