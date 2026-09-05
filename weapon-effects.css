@@ -1,0 +1,26 @@
+/* Shared weapon FX for duel, campaign and war scenes. */
+.weapon-muzzle,.weapon-impact,.weapon-beam,.weapon-bullet,.weapon-saber,.weapon-axe,.weapon-slash{position:absolute;z-index:30;pointer-events:none}
+.weapon-muzzle{width:22px;height:22px;border-radius:50%;background:#fff7ba;box-shadow:0 0 8px #fff,0 0 20px #ff65e7,0 0 34px #46dcff}
+.weapon-muzzle:before,.weapon-muzzle:after{content:"";position:absolute;left:50%;top:50%;width:34px;height:4px;background:#fff;transform:translate(-50%,-50%);box-shadow:0 0 10px #ff62e4}
+.weapon-muzzle:after{transform:translate(-50%,-50%) rotate(90deg)}
+.weapon-muzzle.enemy{background:#fff1a8;box-shadow:0 0 8px #fff,0 0 20px #ffac38,0 0 34px #ff5b31}
+.weapon-muzzle.enemy:before,.weapon-muzzle.enemy:after{box-shadow:0 0 10px #ff7e2d}
+.weapon-beam{width:38px;height:5px;margin-left:-19px;margin-top:-2px;border-radius:999px;background:#fff;box-shadow:0 0 6px #fff,0 0 14px #ff4fe1,0 0 24px #4bdfff;transform-origin:center}
+.weapon-bullet{width:14px;height:4px;margin-left:-7px;margin-top:-2px;border-radius:999px;background:#fff4a5;box-shadow:0 0 5px #fff,0 0 12px #ff9b32}
+.weapon-impact{width:26px;height:26px;border-radius:50%;background:radial-gradient(circle,#fff 0 18%,#ffec65 19% 34%,#ff6d38 35% 54%,transparent 56%);filter:drop-shadow(0 0 8px #ffb33d)}
+.weapon-impact.enemy{background:radial-gradient(circle,#fff 0 18%,#ffd96d 19% 34%,#ff5138 35% 54%,transparent 56%)}
+.weapon-saber,.weapon-axe{width:9px;height:74px;border-radius:999px;transform-origin:50% 88%;background:#fff;box-shadow:0 0 8px #fff,0 0 16px #ff4ed8,0 0 28px #d929ff}
+.weapon-saber:after{content:"";position:absolute;left:50%;bottom:-13px;transform:translateX(-50%);width:14px;height:18px;border-radius:4px;background:#d9e2ea;box-shadow:inset 0 0 0 2px #596775}
+.weapon-axe{width:11px;height:56px;background:#4d5560;box-shadow:none}
+.weapon-axe:before{content:"";position:absolute;left:-18px;top:-5px;width:42px;height:24px;background:linear-gradient(135deg,#fff7a8,#ffb139 45%,#ff5a28);clip-path:polygon(0 18%,100% 0,72% 100%,13% 72%);filter:drop-shadow(0 0 7px #ff7c2d)}
+.weapon-slash{width:12px;height:88px;border-radius:999px;background:#fff;box-shadow:0 0 8px #fff,0 0 20px #ff54dc,0 0 38px #d72bff;transform-origin:center}
+.weapon-slash.enemy{background:#fff6bd;box-shadow:0 0 8px #fff,0 0 20px #ffad38,0 0 38px #ff542e}
+.weapon-recoil{animation:weaponRecoil .2s ease-in-out}
+@keyframes weaponRecoil{0%,100%{translate:0 0}45%{translate:-5px 0}}
+.enemy .weapon-recoil,.enemy-formation .weapon-recoil{animation-name:weaponRecoilEnemy}
+@keyframes weaponRecoilEnemy{0%,100%{translate:0 0}45%{translate:5px 0}}
+@media(max-width:540px){
+  .weapon-muzzle{width:16px;height:16px}.weapon-muzzle:before,.weapon-muzzle:after{width:25px;height:3px}
+  .weapon-beam{width:28px;height:4px}.weapon-bullet{width:10px;height:3px}
+  .weapon-impact{width:20px;height:20px}.weapon-saber{height:58px}.weapon-axe{height:46px}.weapon-slash{height:68px;width:9px}
+}
