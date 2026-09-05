@@ -37,16 +37,19 @@ Object.assign(WarScene.prototype,{
     this.log.textContent=`4 對 4 展開戰鬥隊形｜${this.enemyStrengthText()}｜雙方各有 2 台預備援軍`;
     this.ask();
   },
+  sharedMechMarkup(enemy=false){
+    const source=$(enemy?'#campaignEnemyRobot':'#campaignHeroRobot');
+    const shellClass=enemy?'enemy':'hero';
+    const exactParts=source?source.innerHTML:'';
+    return `<div class="war-mech-shell ${shellClass}"><div class="robot war-shared-robot">${exactParts}</div></div>`;
+  },
   unitMarkup(u){
     const z=u.side==='enemy';
     const role=this.isFrontline(u)?'前排':'後排';
-    const mech=z
-      ? `<div class="war-mech-shell enemy"><div class="robot war-shared-robot"><i class="part spike"></i><i class="part head"></i><i class="part visor"></i><i class="part eye"></i><i class="part chest"></i><i class="part waist"></i><i class="part skirt1"></i><i class="part skirt2"></i><i class="part shoulder"></i><i class="part armL"></i><i class="part armR"></i><i class="part legL"></i><i class="part legR"></i><i class="part footL"></i><i class="part footR"></i><i class="part axe"></i></div></div>`
-      : `<div class="war-mech-shell hero"><div class="robot war-shared-robot"><i class="part v1"></i><i class="part v2"></i><i class="part head"></i><i class="part face"></i><i class="part visor"></i><i class="part chest"></i><i class="part chest2"></i><i class="part waist"></i><i class="part skirt1"></i><i class="part skirt2"></i><i class="part armL"></i><i class="part armR"></i><i class="part legL"></i><i class="part legR"></i><i class="part footL"></i><i class="part footR"></i><i class="part beam"></i></div></div>`;
     return `<div class="unit-name"><span class="${u.player?'you':''}">${u.player?'YOU｜':''}${u.name}${z?` <em>Lv.${u.rank}</em>`:''}</span><span>${Math.ceil(u.hp)}/${u.maxHp}</span></div>
       <div class="unit-hp"><i style="width:${(u.hp/u.maxHp)*100}%"></i></div>
       <div class="formation-role">${role}</div>
-      ${mech}`;
+      ${this.sharedMechMarkup(z)}`;
   },
   statusText(side){
     const list=side==='ally'?this.allies:this.enemies;
