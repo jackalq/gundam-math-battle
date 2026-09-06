@@ -1,5 +1,7 @@
 'use strict';
-const CACHE_NAME='robot-math-v16-brand-rename';
+const SCOPE_KEY=new URL(self.registration.scope).pathname.replace(/^\/+|\/+$/g,'').replace(/[^a-z0-9_-]+/gi,'-')||'root';
+const CACHE_PREFIX=`robot-math-${SCOPE_KEY}-`;
+const CACHE_NAME=`${CACHE_PREFIX}v17-multi-page`;
 const APP_SHELL=[
   './','./index.html','./styles.css',
   './css-base-layout.css','./css-duel-hero.css','./css-duel-enemy.css','./css-mech-detail.css','./css-question-review.css','./css-war-layout.css','./css-war-units.css','./css-war-shared-mechs.css','./css-ui.css','./css-sprite-mechs.css','./css-sprite-hotfix.css','./weapon-effects.css','./weapon-sprites.svg',
@@ -7,5 +9,5 @@ const APP_SHELL=[
   './manifest.webmanifest','./icons/icon-192.png','./icons/icon.svg'
 ];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE_NAME).then(c=>c.addAll(APP_SHELL)).then(()=>self.skipWaiting())));
-self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE_NAME).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
+self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>(k.startsWith(CACHE_PREFIX)&&k!==CACHE_NAME)||k==='robot-math-v16-brand-rename').map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
 self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;e.respondWith(caches.match(e.request).then(hit=>hit||fetch(e.request).then(r=>{const copy=r.clone();caches.open(CACHE_NAME).then(c=>c.put(e.request,copy));return r}).catch(()=>caches.match('./index.html'))))});
