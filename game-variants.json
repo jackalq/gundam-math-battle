@@ -1,0 +1,14 @@
+{
+  "mecha": {
+    "path": "mecha",
+    "brand": "機甲",
+    "title": "機甲九九大作戰",
+    "short_name": "機甲九九"
+  },
+  "blocks": {
+    "path": "blocks",
+    "brand": "積木",
+    "title": "積木九九大作戰",
+    "short_name": "積木九九"
+  }
+}
