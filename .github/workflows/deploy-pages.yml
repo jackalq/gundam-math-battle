@@ -23,12 +23,67 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
+
+      - name: Build game variants
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf _site
+          mkdir -p _site
+
+          # Keep the root URL as the existing mecha game for backward compatibility.
+          rsync -a --exclude='.git' --exclude='.github' --exclude='_site' ./ _site/
+
+          python3 - <<'PY'
+          import json
+          import shutil
+          import subprocess
+          from pathlib import Path
+
+          root = Path('.')
+          site = Path('_site')
+          variants = json.loads(Path('game-variants.json').read_text(encoding='utf-8'))
+
+          for variant_id, config in variants.items():
+              target = site / config['path']
+              target.mkdir(parents=True, exist_ok=True)
+              subprocess.run([
+                  'rsync', '-a',
+                  '--exclude=.git', '--exclude=.github', '--exclude=_site',
+                  './', f'{target}/'
+              ], check=True)
+
+              # Publish the resolved deployment config beside each game page.
+              (target / 'variant.json').write_text(
+                  json.dumps({'id': variant_id, **config}, ensure_ascii=False, indent=2) + '\n',
+                  encoding='utf-8'
+              )
+
+              # Source remains the mecha version. The blocks deployment only changes branding for now;
+              # gameplay differences will be added later against the same shared source.
+              if variant_id == 'blocks':
+                  replacements = [
+                      ('機甲九九大作戰', config['title']),
+                      ('機甲九九', config['short_name']),
+                      ('機甲 <b>九九', f"{config['brand']} <b>九九"),
+                      ('機甲 <span>九九', f"{config['brand']} <span>九九"),
+                  ]
+                  for rel in ('index.html', 'manifest.webmanifest', 'pwa.js'):
+                      path = target / rel
+                      text = path.read_text(encoding='utf-8')
+                      for old, new in replacements:
+                          text = text.replace(old, new)
+                      path.write_text(text, encoding='utf-8')
+          PY
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: '.'
+          path: '_site'
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
