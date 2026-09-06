@@ -1,6 +1,6 @@
 {
-  "name": "鋼彈九九大作戰",
-  "short_name": "鋼彈九九",
+  "name": "機甲九九大作戰",
+  "short_name": "機甲九九",
   "description": "給國小二年級練習九九乘法與加減法的離線戰鬥遊戲",
   "id": "./",
   "start_url": "./index.html",
