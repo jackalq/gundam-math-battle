@@ -24,6 +24,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Validate JavaScript
+        shell: bash
+        run: |
+          set -euo pipefail
+          for file in *.js; do
+            node --check "$file"
+          done
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
