@@ -5,6 +5,7 @@
     const response=await fetch('./variant.json',{cache:'no-store'});
     if(response.ok)window.GameVariant={...window.GameVariant,...await response.json()};
   }catch{}
+  document.documentElement.dataset.variant=window.GameVariant.id||'mecha';
 
   const scripts=[
     'core-domain.js','core-questions.js','core-ui.js','weapon-effects.js','battle-dci.js','app-duel.js',
