@@ -47,6 +47,7 @@ class CampaignScene{
   start(){activateScene('campaignScene');this.heroState.reset();this.enemyState.reset();this.enemyIndex=1;this.paint();this.ask()}
   paint(){
     this.heroHP.style.width=this.heroState.hp+'%';this.enemyHP.style.width=this.enemyState.hp+'%';
+    this.enemy.dataset.blockEnemy=String(this.enemyIndex);
     this.enemyName.textContent=`薩克實戰兵 ${this.enemyIndex} 號`;
     this.squad.innerHTML=`<span>敵軍 ${this.enemyIndex} / ${this.enemyTotal}</span>`;
     for(let i=1;i<=this.enemyTotal;i++){const d=document.createElement('i');d.className='zaku-dot'+(i<this.enemyIndex?' down':i===this.enemyIndex?' current':'');this.squad.appendChild(d)}
