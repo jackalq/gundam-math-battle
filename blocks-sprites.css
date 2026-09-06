@@ -1,0 +1,42 @@
+/* Blocks variant character skin only. Gameplay and scene rules stay shared. */
+html[data-variant="blocks"] .robot{
+  background-repeat:no-repeat!important;
+  background-position:center bottom!important;
+  background-size:contain!important;
+  image-rendering:pixelated;
+  image-rendering:crisp-edges;
+}
+html[data-variant="blocks"] .robot .part{display:none!important}
+
+/* Player character: same blue-shirt block hero in Duel, Campaign and War. */
+html[data-variant="blocks"] #duelHeroRobot,
+html[data-variant="blocks"] #campaignHeroRobot,
+html[data-variant="blocks"] .ally-formation .war-unit .robot{
+  background-image:url("./assets/blocks/hero-idle.png")!important;
+}
+
+/* Duel starts with the stone block monster. */
+html[data-variant="blocks"] #duelEnemyRobot{
+  background-image:url("./assets/blocks/enemy-stone.png")!important;
+}
+
+/* Campaign visually cycles through the five supplied monster designs. */
+html[data-variant="blocks"] #campaignEnemyRobot[data-block-enemy="1"]{background-image:url("./assets/blocks/enemy-stone.png")!important}
+html[data-variant="blocks"] #campaignEnemyRobot[data-block-enemy="2"]{background-image:url("./assets/blocks/enemy-archer.png")!important}
+html[data-variant="blocks"] #campaignEnemyRobot[data-block-enemy="3"]{background-image:url("./assets/blocks/enemy-tall.png")!important}
+html[data-variant="blocks"] #campaignEnemyRobot[data-block-enemy="4"]{background-image:url("./assets/blocks/enemy-green.png")!important}
+html[data-variant="blocks"] #campaignEnemyRobot[data-block-enemy="5"]{background-image:url("./assets/blocks/enemy-boss.png")!important}
+
+/* War keeps all existing formation rules; only unit artwork is replaced. */
+html[data-variant="blocks"] .enemy-formation .war-unit:nth-child(1) .robot{background-image:url("./assets/blocks/enemy-stone.png")!important}
+html[data-variant="blocks"] .enemy-formation .war-unit:nth-child(2) .robot{background-image:url("./assets/blocks/enemy-archer.png")!important}
+html[data-variant="blocks"] .enemy-formation .war-unit:nth-child(3) .robot{background-image:url("./assets/blocks/enemy-tall.png")!important}
+html[data-variant="blocks"] .enemy-formation .war-unit:nth-child(4) .robot{background-image:url("./assets/blocks/enemy-green.png")!important}
+html[data-variant="blocks"] .enemy-formation .war-unit:nth-child(5) .robot{background-image:url("./assets/blocks/enemy-boss.png")!important}
+html[data-variant="blocks"] .enemy-formation .war-unit:nth-child(6) .robot{background-image:url("./assets/blocks/enemy-tall.png")!important}
+
+/* Keep the generated block sprites upright; old mecha facing transforms must not leak in. */
+html[data-variant="blocks"] .duel-layout .robot,
+html[data-variant="blocks"] .war-mech-shell .robot{
+  transform:none!important;
+}
