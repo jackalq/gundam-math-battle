@@ -17,8 +17,12 @@ const MODES={
   war:{name:'戰爭模式',multipliers:[1,2,3,4,5,6,7,8,9],review:'兩個數皆 200 以內的加減法'}
 };
 const LEVEL_ORDER=['beginner','level1','level2','level3','battle','war'];
-const game={running:false,paused:false,sound:true,level:'beginner',stage:1,score:0,combo:0,correctCount:0,round:0,question:null,phase:'idle',best:Number(localStorage.gundamMathBest||0),mastery:JSON.parse(localStorage.gundamMathMastery||'{}')};
-function save(){localStorage.gundamMathBest=String(game.best);localStorage.gundamMathMastery=JSON.stringify(game.mastery)}
+
+// Keep existing players' progress when the project branding changes from gundam -> robot.
+const storedBest=localStorage.robotMathBest??localStorage.gundamMathBest??'0';
+const storedMastery=localStorage.robotMathMastery??localStorage.gundamMathMastery??'{}';
+const game={running:false,paused:false,sound:true,level:'beginner',stage:1,score:0,combo:0,correctCount:0,round:0,question:null,phase:'idle',best:Number(storedBest||0),mastery:JSON.parse(storedMastery||'{}')};
+function save(){localStorage.robotMathBest=String(game.best);localStorage.robotMathMastery=JSON.stringify(game.mastery)}
 function masteryCount(){let c=0;for(let a=1;a<=9;a++)for(let b=1;b<=9;b++)if((game.mastery[`${a}x${b}`]||0)>=2)c++;return c}
 function mode(){return MODES[game.level]}
 
