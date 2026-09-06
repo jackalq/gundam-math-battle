@@ -39,13 +39,18 @@ jobs:
 
           python3 - <<'PY'
           import json
-          import shutil
           import subprocess
           from pathlib import Path
 
-          root = Path('.')
           site = Path('_site')
           variants = json.loads(Path('game-variants.json').read_text(encoding='utf-8'))
+
+          # Root is an alias of the mecha deployment and gets the same runtime config.
+          root_config = variants['mecha']
+          (site / 'variant.json').write_text(
+              json.dumps({'id': 'mecha', **root_config}, ensure_ascii=False, indent=2) + '\n',
+              encoding='utf-8'
+          )
 
           for variant_id, config in variants.items():
               target = site / config['path']
@@ -62,8 +67,8 @@ jobs:
                   encoding='utf-8'
               )
 
-              # Source remains the mecha version. The blocks deployment only changes branding for now;
-              # gameplay differences will be added later against the same shared source.
+              # Source remains shared. Blocks changes only branding for now;
+              # gameplay/art differences are selected at runtime through its presenter.
               if variant_id == 'blocks':
                   replacements = [
                       ('機甲九九大作戰', config['title']),
