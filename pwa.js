@@ -52,6 +52,6 @@
 
   window.addEventListener('appinstalled', () => {
     if (installBtn) installBtn.classList.remove('show');
-    toast('鋼彈九九大作戰已安裝。');
+    toast('機甲九九大作戰已安裝。');
   });
 })();
