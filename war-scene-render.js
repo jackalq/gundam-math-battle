@@ -19,10 +19,15 @@ Object.assign(WarScene.prototype,{
   isAdjacent(attacker,target){
     return attacker.side!==target.side&&this.isFrontline(attacker)&&this.isFrontline(target)&&this.rowOf(attacker)===this.rowOf(target);
   },
-  weaponFor(attacker,target){
-    const melee=this.isAdjacent(attacker,target);
-    if(attacker.side==='enemy')return melee?{type:'melee',name:'熱能斧'}:{type:'ranged',name:'薩克機槍'};
-    return melee?{type:'melee',name:'光束軍刀'}:{type:'ranged',name:'光束步槍'};
+  // Compatibility delegates. Interaction decisions now live in DCI roles/presenter.
+  weaponFor(attacker,target){return BattlePresentation.current().warWeapon(this,attacker,target)},
+  chooseEnemyTarget(attacker){
+    const context={scene:this,presenter:BattlePresentation.current()};
+    return WarRoles.TargetSelector.enemy(context,attacker);
+  },
+  chooseAllyTarget(light=false,attacker=null){
+    const context={scene:this,presenter:BattlePresentation.current()};
+    return WarRoles.TargetSelector.ally(context,attacker,light);
   },
   start(){
     activateScene('warScene');
@@ -53,7 +58,7 @@ Object.assign(WarScene.prototype,{
   },
   statusText(side){
     const list=side==='ally'?this.allies:this.enemies;
-    const alive=list.filter(x=>x.alive).length;
+    const alive=list.filter(WarRoles.Target.alive).length;
     const reserve=this.maxUnits-list.length;
     const label=side==='ally'?'我方':'敵軍';
     return `${label} ${alive} / ${list.length}${reserve>0?`｜預備 ${reserve}`:''}`;
@@ -89,29 +94,9 @@ Object.assign(WarScene.prototype,{
     game.phase='question';
     game.question=QuestionService.next();
     CommonUI.setMode(game.question.isReview?mode().review:'乘法');
-    const tag=`戰爭 ${game.stage}｜敵軍 Lv.${game.stage}｜MISSION ${game.round}｜我方 ${this.allies.filter(x=>x.alive).length}/${this.allies.length} VS 敵軍 ${this.enemies.filter(x=>x.alive).length}/${this.enemies.length}`;
+    const tag=`戰爭 ${game.stage}｜敵軍 Lv.${game.stage}｜MISSION ${game.round}｜我方 ${this.allies.filter(WarRoles.Target.alive).length}/${this.allies.length} VS 敵軍 ${this.enemies.filter(WarRoles.Target.alive).length}/${this.enemies.length}`;
     this.panel.show(game.question,tag,game.question.isReview?'複習題：答完後戰鬥開始。':'前排相鄰會近戰；其他位置使用遠距離武器。');
     this.overlay.classList.add('show');
     this.log.textContent='等待玩家指令…';
-  },
-  chooseEnemyTarget(attacker){
-    const targets=this.enemies.filter(x=>x.alive);
-    if(!targets.length)return null;
-    const adjacent=targets.find(t=>this.isAdjacent(attacker,t));
-    if(adjacent&&Math.random()<.72)return adjacent;
-    const front=targets.filter(t=>this.isFrontline(t));
-    return shuffle(front.length&&Math.random()<.58?front:targets)[0];
-  },
-  chooseAllyTarget(light=false,attacker=null){
-    const alive=this.allies.filter(x=>x.alive);
-    if(!alive.length)return null;
-    if(attacker){
-      const adjacent=alive.find(t=>this.isAdjacent(attacker,t));
-      if(adjacent&&!light&&Math.random()<.68)return adjacent;
-    }
-    const mates=alive.filter(x=>!x.player);
-    const player=this.allies[0];
-    if(mates.length&&(light||Math.random()<.72))return mates[rand(0,mates.length-1)];
-    return player.alive?player:(mates[0]||null);
   }
 });
