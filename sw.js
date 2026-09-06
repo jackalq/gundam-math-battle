@@ -1,12 +1,12 @@
 'use strict';
 const SCOPE_KEY=new URL(self.registration.scope).pathname.replace(/^\/+|\/+$/g,'').replace(/[^a-z0-9_-]+/gi,'-')||'root';
 const CACHE_PREFIX=`robot-math-${SCOPE_KEY}-`;
-const CACHE_NAME=`${CACHE_PREFIX}v17-multi-page`;
+const CACHE_NAME=`${CACHE_PREFIX}v18-dci-variants`;
 const APP_SHELL=[
   './','./index.html','./styles.css',
   './css-base-layout.css','./css-duel-hero.css','./css-duel-enemy.css','./css-mech-detail.css','./css-question-review.css','./css-war-layout.css','./css-war-units.css','./css-war-shared-mechs.css','./css-ui.css','./css-sprite-mechs.css','./css-sprite-hotfix.css','./weapon-effects.css','./weapon-sprites.svg',
-  './app.js','./core-domain.js','./core-questions.js','./core-ui.js','./weapon-effects.js','./app-duel.js','./war-context.js','./war-scene-core.js','./war-scene-render.js','./war-scene-turn.js','./war-scene-effects.js','./app-ui.js','./pwa.js',
-  './manifest.webmanifest','./icons/icon-192.png','./icons/icon.svg'
+  './app.js','./core-domain.js','./core-questions.js','./core-ui.js','./weapon-effects.js','./battle-dci.js','./app-duel.js','./war-context.js','./war-scene-core.js','./war-scene-render.js','./war-scene-turn.js','./war-scene-effects.js','./app-ui.js','./pwa.js',
+  './variant.json','./manifest.webmanifest','./icons/icon-192.png','./icons/icon.svg'
 ];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE_NAME).then(c=>c.addAll(APP_SHELL)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>(k.startsWith(CACHE_PREFIX)&&k!==CACHE_NAME)||k==='robot-math-v16-brand-rename').map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
